@@ -1,0 +1,168 @@
+{"shows":[
+    {
+        "id":1,
+        "title":"Frozen 2",
+        "length":103,
+        "releaseYear":2019,
+        "ageRating":"PG",
+        "genre":"Animation",
+        "director":"Chris Buck, Jennifer Lea",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":2,
+        "title":"The Jungle Book",
+        "length":106,
+        "releaseYear":2016,
+        "ageRating":"PG",
+        "genre":"Adventure",
+        "director":"Jon Favreau",
+        "rating":3,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":3,
+        "title":"The Lion King",
+        "length":118,
+        "releaseYear":2019,
+        "ageRating":"PG",
+        "genre":"Animation",
+        "director":"Jon Favreau",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":4,
+        "title":"Beauty and the Beast",
+        "length":129,
+        "releaseYear":2017,
+        "ageRating":"PG",
+        "genre":"Fantasy",
+        "director":"Bill Condon",
+        "rating":2,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":5,
+        "title":"Aladdin",
+        "length":128,
+        "releaseYear":2019,
+        "ageRating":"PG",
+        "genre":"Fantasy",
+        "director":"Guy Ritchie",
+        "rating":3,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":6,
+        "title":"Joker",
+        "length":122,
+        "releaseYear":2019,
+        "ageRating":"R",
+        "genre":"Crime",
+        "director":"Todd Phillips",
+        "rating":3,
+        "reviews":"An excellent film",
+        "isAdult":true  
+    },{
+        "id":7,
+        "title":"Logan",
+        "length":137,
+        "releaseYear":2017,
+        "ageRating":"R",
+        "genre":"Action",
+        "director":"James Mangold",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":true
+    },{
+        "id":8,
+        "title":"Deadpool",
+        "length":108,
+        "releaseYear":2016,
+        "ageRating":"R",
+        "genre":"Comedy",
+        "director":"Tim Miller",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":true
+    },{
+        "id":9,
+        "title":"Deadpool 2",
+        "length":119,
+        "releaseYear":2018,
+        "ageRating":"R",
+        "genre":"Comedy",
+        "director":"David Leitch",
+        "rating":2,
+        "reviews":"An excellent film",
+        "isAdult":true
+    },{
+        "id":10,
+        "title":"Star Wars: Episode IX - The Rise of Skywalker",
+        "length":142,
+        "releaseYear":2019,
+        "ageRating":"PG-13",
+        "genre":"Sci-Fi",
+        "director":"J.J. Abrams",
+        "rating":2,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":11,
+        "title":"Avengers:Engame",
+        "length":180,
+        "releaseYear":2019,
+        "ageRating":"PG-13",
+        "genre":"Action",
+        "director":"Anthony Russo, Joe Russuo",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":12,
+        "title":"Spider-Man:Far From Home",
+        "length":129,
+        "releaseYear":2019,
+        "ageRating":"PG-13",
+        "genre":"Action",
+        "director":"Jon Watts",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":13,
+        "title":"Jumanji:The Next Level",
+        "length":123,
+        "releaseYear":2019,
+        "ageRating":"PG-13",
+        "genre":"Adventure",
+        "director":"Jake Kasdan",
+        "rating":4,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":14,
+        "title":"Fast & Furious Presents: Hobbs & Shaw",
+        "length":137,
+        "releaseYear":2019,
+        "ageRating":"PG-13",
+        "genre":"Action",
+        "director":"David Leitch",
+        "rating":1,
+        "reviews":"An excellent film",
+        "isAdult":false
+    },{
+        "id":15,
+        "title":"Toy Story 4",
+        "length":100,
+        "releaseYear":2019,
+        "ageRating":"G",
+        "genre":"Animation",
+        "director":"Josh Cooley",
+        "rating":5,
+        "reviews":"An excellent film",
+        "isAdult":false
+    }
+]}

@@ -1,0 +1,39 @@
+{"theaters" :[
+    {
+        "id":1,
+        "title":"ABC Theater",
+        "ratings":4,
+        "reviews":"Great Theater",
+        "showsPlays":true
+    },{
+        "id":2,
+        "title":"Royal Theaters",
+        "ratings":2,
+        "reviews":"Great Theater",
+        "showsPlays":true
+    },{
+        "id":3,
+        "title":"Columbia Theater",
+        "ratings":4,
+        "reviews":"Great Theater",
+        "showsPlays":true
+    },{
+        "id":4,
+        "title":"Spark Theater",
+        "ratings":2,
+        "reviews":"Great Theater",
+        "showsPlays":false
+    },{
+        "id":5,
+        "title":"Regal Theater",
+        "ratings":4,
+        "reviews":"Great Theater",
+        "showsPlays":false
+    },{
+        "id":6,
+        "title":"PlaysRUs",
+        "ratings":4,
+        "reviews":"Great Theater",
+        "showsPlays":true
+    }
+]}
