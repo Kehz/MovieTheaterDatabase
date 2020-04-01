@@ -73,6 +73,8 @@ public class TheaterDriver {
 
 	public static void main(String[] args) {
 		TheaterDriver theaterInterface = new TheaterDriver();
-		theaterInterface.run();
+		TestInterface testing = new TestInterface();
+		//theaterInterface.run();
+		testing.play();
 	}
 }
