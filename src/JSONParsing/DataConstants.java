@@ -1,6 +1,7 @@
+package JSONParsing;
 
 public abstract class DataConstants {
-	protected static final String SHOW_FILE_NAME = "src/movies.json";
+	protected static final String SHOW_FILE_NAME = "src/jsons/movies.json";
 	protected static final String SHOW = "movies";
 	protected static final String SHOW_TITLE = "title";
 	protected static final String SHOW_LENGTH = "length";
@@ -9,4 +10,8 @@ public abstract class DataConstants {
 	protected static final String SHOW_DIRECTOR = "director";
 	protected static final String SHOW_RATINGS = "rating";
 	protected static final String SHOW_REVIEWS = "reviews";
+	protected static final String THEATER_FILE_NAME = "src/jsons/theaters.json";
+	protected static final String THEATER_NAME = "title";
+	protected static final String THEATER_RATINGS = "ratings";
+	protected static final String THEATER_REVIEWS = "reviews";
 }

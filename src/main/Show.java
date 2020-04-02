@@ -1,3 +1,4 @@
+package main;
 
 public class Show {
 	private String title;
