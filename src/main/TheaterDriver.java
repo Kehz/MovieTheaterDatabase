@@ -19,7 +19,7 @@ public class TheaterDriver {
 		Scanner in = new Scanner(System.in);
 		Theater theater = new Theater();
 		InputHandler inHandler = new InputHandler(theater);
-		
+		System.out.println("Current commands are: show movies,show theaters, enter movie, enter theater");
 		
 		while(true) {
 			String command = getInputLine("Enter Command", in);
