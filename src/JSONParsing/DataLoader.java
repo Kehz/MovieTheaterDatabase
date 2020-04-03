@@ -7,6 +7,11 @@ import org.json.simple.parser.JSONParser;
 
 import main.Show;
 import main.Theaters;
+
+/*
+ * parses our jsons and loads them into array lists
+ * 
+ */
 public class DataLoader extends DataConstants{
 	
 	

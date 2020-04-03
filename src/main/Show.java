@@ -1,5 +1,7 @@
 package main;
-
+/*
+ * Will modify this at some point to contain properly hold values from movie/play
+ */
 public class Show {
 	private String title;
 	private int length;

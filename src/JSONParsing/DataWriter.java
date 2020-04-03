@@ -7,6 +7,10 @@ import org.json.simple.JSONObject;
 
 import main.Show;
 import main.Theaters;
+/*
+ * This class contains the function that write the data into 
+ * the json files. Could maybe be helpful with login system
+ */
 public class DataWriter extends DataConstants {
 	
 	
@@ -57,9 +61,7 @@ public class DataWriter extends DataConstants {
 		showDetails.put(SHOW_DIRECTOR, show.getDirector());
 		showDetails.put(SHOW_RATINGS, show.getRating());
 		showDetails.put(SHOW_REVIEWS, show.getReviews());
-		
 		return showDetails;
-		
 	}
 	
 	public static JSONObject getTheatersJSON(Theaters theaters) {
@@ -67,8 +69,6 @@ public class DataWriter extends DataConstants {
 		theaterDetails.put(THEATER_NAME,theaters.getTitle());
 		theaterDetails.put(THEATER_RATINGS,theaters.getRatings());
 		theaterDetails.put(THEATER_REVIEWS,theaters.getReviews());
-		
-		
 		return theaterDetails;
 		
 	}

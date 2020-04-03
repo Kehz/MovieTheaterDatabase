@@ -3,9 +3,9 @@ package Commands;
 
 public class DisplayShowsCommand implements Command{
 
-	private Theater theater;
+	private TheaterCommands theater;
 	
-	public DisplayShowsCommand(Theater theater) {
+	public DisplayShowsCommand(TheaterCommands theater) {
 		this.theater = theater;
 	}
 	

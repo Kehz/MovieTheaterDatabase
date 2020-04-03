@@ -2,9 +2,9 @@ package Commands;
 
 public class EnterMovieCommand implements Command {
 	
-private Theater theater;
+private TheaterCommands theater;
 	
-	public EnterMovieCommand(Theater theater) {
+	public EnterMovieCommand(TheaterCommands theater) {
 		this.theater = theater;
 	}
 	@Override

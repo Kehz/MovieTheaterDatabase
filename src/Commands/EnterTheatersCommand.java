@@ -1,8 +1,8 @@
 package Commands;
 
 public class EnterTheatersCommand implements Command{
-	Theater theater;
-	public EnterTheatersCommand(Theater theater) {
+	TheaterCommands theater;
+	public EnterTheatersCommand(TheaterCommands theater) {
 		this.theater = theater;
 	}
 	@Override

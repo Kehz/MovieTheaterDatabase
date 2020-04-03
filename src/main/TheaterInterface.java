@@ -1,9 +1,12 @@
 package main;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import Commands.Theater;
 import JSONParsing.ShowList;
+
+/*
+ * This class is handing our adding to our array lists for movies/theaters
+ * Also contains functions for displaying the current movies / theaters in the json
+ */
 public class TheaterInterface {
 	private Scanner scanner;
 	

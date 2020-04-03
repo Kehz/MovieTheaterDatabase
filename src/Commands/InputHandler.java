@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class InputHandler {
 	private HashMap<String, Command> commands = new HashMap<>();
 	
-	public InputHandler(Theater theater) { 
+	public InputHandler(TheaterCommands theater) { 
 		commands.put("show movies", new DisplayShowsCommand(theater));
 		commands.put("enter movie", new EnterMovieCommand(theater));
 		commands.put("enter theater", new EnterTheatersCommand(theater));

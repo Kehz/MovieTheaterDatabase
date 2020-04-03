@@ -9,15 +9,17 @@ package main;
 import java.util.Scanner;
 
 import Commands.InputHandler;
-import Commands.Theater;
+import Commands.TheaterCommands;
 public class TheaterDriver {
 	private static final String WELCOME_MESSAGE = "Welcome to the MovieApp";
 	private String[] mainLoginMenu = {"Create Account", "Continue as Guest", "Login", "Employee Login", "Exit"}; 
 	private Scanner scanner;
-	
+	/**
+	 * This is the function for executing our commands
+	 */
 	public void runTheaterDriver() {
 		Scanner in = new Scanner(System.in);
-		Theater theater = new Theater();
+		TheaterCommands theater = new TheaterCommands();
 		InputHandler inHandler = new InputHandler(theater);
 		System.out.println("Current commands are: show movies,show theaters, enter movie, enter theater");
 		
@@ -32,7 +34,7 @@ public class TheaterDriver {
 		System.out.print(prompt + ": ");
 		return in.nextLine().toLowerCase().trim();
 	}
-		
+	//Temp, leave here for now. will probably tie in with login system in some way once that is finished	
 //	public void run() {
 //		System.out.println(WELCOME_MESSAGE);
 //

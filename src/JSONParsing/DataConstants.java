@@ -1,5 +1,8 @@
 package JSONParsing;
-
+/*
+ * contains some constants for our json loading to make things
+ * easier to modify, keep jsons stuff here only for now and probably forever
+ */
 public abstract class DataConstants {
 	protected static final String SHOW_FILE_NAME = "src/jsons/movies.json";
 	protected static final String SHOW = "movies";

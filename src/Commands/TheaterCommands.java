@@ -1,8 +1,10 @@
 package Commands;
 
 import main.TheaterInterface;
-
-public class Theater {
+/*
+ * This is where we wil place our user commands
+ */
+public class TheaterCommands {
 	TheaterInterface ti = new TheaterInterface();
 	
 	public void displayMovies() {	
