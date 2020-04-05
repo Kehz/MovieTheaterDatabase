@@ -7,18 +7,28 @@ public class User {
 	private int age;
 	private int discountID;
 	private int points;
-	
-	
-	
+	/**
+	 * 
+	 * @param username - Users username
+	 * @param password - Users password
+	 * @param email - Users email
+	 * @param age - Users age
+	 * @param points - Users points
+	 */
 	public User(String username, String password, String email, int age, int points) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.age = age;
 		this.points = points;
-		
-		AccountType guest = AccountType.GUEST;
 	}
+	
+	
+	
+
+	/*
+	 * Getters and Setters for our User object
+	 */
 	
 	public String getUsername() {
 		return username;

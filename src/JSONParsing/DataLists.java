@@ -1,6 +1,8 @@
 package JSONParsing;
 import java.util.ArrayList;
 
+import main.Movie;
+import main.Play;
 import main.Show;
 import main.Theaters;
 import main.User;
@@ -14,14 +16,16 @@ import main.User;
  */
 public class DataLists {
 	private static DataLists dataLists = null;
-	private static ArrayList<Show> shows = new ArrayList<Show>();
+	private static ArrayList<Movie> movies = new ArrayList<Movie>();
+	private static ArrayList<Play> plays = new ArrayList<Play>();
 	private static ArrayList<Theaters> theaters = new ArrayList<Theaters>();
 	private static ArrayList<User> users = new ArrayList<User>();
 	/**
 	 * This constructor loads the arraylists with values from the DataLoader class
 	 */
 	private DataLists() {
-		shows = DataLoader.loadShows();
+		movies = DataLoader.loadMovies();
+		plays = DataLoader.loadPlays();
 		theaters = DataLoader.loadTheaters();
 		users = DataLoader.loadUsers();
 	}
@@ -34,8 +38,12 @@ public class DataLists {
 		return dataLists;
 	}
 	
-	public ArrayList<Show> getShows() {
-		return shows;
+	public ArrayList<Play> getPlays() {
+		return plays;
+	}
+	
+	public ArrayList<Movie> getMovie() {
+		return movies;
 	}
 	
 	public ArrayList<Theaters> getTheaters() {
@@ -46,10 +54,16 @@ public class DataLists {
 		return users;
 	}
 	
-	public void addShow(String title, int length, int releaseYear, String genre, String director, int rating, String reviews ) {
-		shows.add(new Show(title, length, releaseYear, genre, director, rating, reviews));
-		DataWriter.saveShows();
+	public void addMovie(int id, String title, int length, String genre, String director, int rating, String reviews,String showTimes, String ageRating, int releaseYear) {
+		movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, ageRating, releaseYear));
+		DataWriter.saveMovies();
 	}
+	
+	public void addPlay(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, int amountActors, int timesPerformed) {
+		plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, amountActors, timesPerformed));
+		DataWriter.savePlays();
+	}
+	
 	
 	public void addTheater(String name, int ratings, String reviews) {
 		theaters.add(new Theaters(name, ratings, reviews));

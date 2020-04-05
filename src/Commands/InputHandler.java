@@ -10,10 +10,12 @@ public class InputHandler {
 	private HashMap<String, Command> commands = new HashMap<>();
 	
 	public InputHandler(TheaterCommands theater) { 
-		commands.put("show movies", new DisplayShowsCommand(theater));
+		commands.put("show movies", new DisplayMoviesCommand(theater));
 		commands.put("enter movie", new EnterMovieCommand(theater));
 		commands.put("enter theater", new EnterTheatersCommand(theater));
 		commands.put("show theaters", new DisplayTheatersCommand(theater));
+		commands.put("enter play", new EnterPlayCommand(theater));
+		commands.put("show plays", new DisplayPlaysCommand(theater));
 	}
 	
 	public void inputEntered(String data) {

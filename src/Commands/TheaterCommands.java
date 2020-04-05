@@ -11,11 +11,11 @@ public class TheaterCommands {
 	TheaterInterface ti = new TheaterInterface();
 	
 	public void displayMovies() {	
-		ti.displayShows();
+		ti.displayMovies();
 	}
 	
 	public void addMovie() {
-		ti.addShow();
+		ti.addMovie();
 	}
 	
 	public void displayTheaters() {
@@ -24,5 +24,13 @@ public class TheaterCommands {
 	
 	public void addTheater() {
 		ti.addTheater();
+	}
+	
+	public void addPlay() {
+		ti.addPlay();
+	}
+	
+	public void displayPlay() {
+		ti.displayPlays();
 	}
 }

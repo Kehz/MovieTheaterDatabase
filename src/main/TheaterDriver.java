@@ -13,7 +13,6 @@ import Commands.TheaterCommands;
 public class TheaterDriver {
 	private static final String WELCOME_MESSAGE = "Welcome to the MovieApp";
 	private String[] mainLoginMenu = {"Create Account", "Continue as Guest", "Login", "Employee Login", "Exit"}; 
-	private Scanner scanner;
 	
 	/**
 	 * This command runs the main app after login is exectuted and passes
@@ -22,7 +21,8 @@ public class TheaterDriver {
 		Scanner in = new Scanner(System.in);
 		TheaterCommands theater = new TheaterCommands();
 		InputHandler inHandler = new InputHandler(theater);
-		System.out.println("Current commands are: show movies,show theaters, enter movie, enter theater");
+		System.out.println("Current commands are: show movies,show theaters, enter movie, enter theater"
+							+ "\n show plays, enter play");
 		
 		while(true) {
 			String command = getInputLine("Enter Command", in);
@@ -84,8 +84,8 @@ public class TheaterDriver {
 		
 		int command = Integer.parseInt(input) - 1;
 
-		if(command >= 0 && command <= numCommands -1) return command;
-
+		if(command >= 0 && command <= numCommands -1) return command; 
+		
 		return -1;
 	}
 
