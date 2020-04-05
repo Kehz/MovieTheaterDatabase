@@ -1,5 +1,6 @@
 package main;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import JSONParsing.ShowList;
 
@@ -45,6 +46,21 @@ public class TheaterInterface {
 		}
 	}
 	
+	public void addUser() {
+		ShowList showList = ShowList.getInstance();
+		System.out.println("Create an account by entering following credentials");
+		boolean test = true;
+		while(test) {
+			String username = getField("Enter Username: ");
+			String password = getField("Enter Password: ");
+			String email = getField("Enter email: ");
+			int age = getIntField("Enter age: ");
+			int points = 0;
+			showList.addUser(username, password, email, age, points);
+			test = false;
+		}
+	}
+	
 	private String getField(String prompt) {
 		System.out.println(prompt + ": ");
 		return scanner.nextLine();
@@ -76,6 +92,13 @@ public class TheaterInterface {
 	public void displayShows() {
 		ShowList showList = ShowList.getInstance();
 		ArrayList<Show> titles = showList.getShows();
+		String search = "Frozen 2";
+		for(Show show : titles) {
+			if(show.getTitle() != null && show.getTitle().contains(search)) {
+				System.out.println(show.getTitle());
+			}
+		}
+
 		for(Show show : titles) {
 			System.out.println("\n Title: " + show.getTitle() + "\n Movie Length: " + show.getLength() + "\n Release Year: " + show.getReleaseYear() + "\n Genre: " 
 								+ show.getGenre() +"\n Director: " + show.getDirector() + "\n Rating: " 
@@ -90,5 +113,33 @@ public class TheaterInterface {
 								+ "\n Reviews: " +theaters.getReviews() 
 								+ "\n =======================");
 		}
+	}
+	public boolean login() {
+		Scanner scanner = new Scanner(System.in);
+		ShowList showList = ShowList.getInstance();
+		ArrayList<User> titles = showList.getUsers();
+		System.out.println("Enter username: ");
+		String username = scanner.nextLine();
+		// String email = scanner.nextLine();
+		System.out.println("Enter password: ");
+		String password = scanner.nextLine();
+		
+		boolean found = true;
+		
+		for(User users : titles) {
+			if((users.getUsername() != null && users.getUsername().contains(username)) && (users.getPassword() != null && users.getPassword().contains(password))) {
+				System.out.println("Succesfully Logged In!");
+				found = true;
+				if (found == true) {
+					break;
+				}
+			} else {
+				found = false;
+			}
+		}
+		if (found == false) {
+			System.out.println("Login info incorrect");
+		}
+		return found;
 	}
 }

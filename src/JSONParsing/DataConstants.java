@@ -17,4 +17,10 @@ public abstract class DataConstants {
 	protected static final String THEATER_NAME = "title";
 	protected static final String THEATER_RATINGS = "ratings";
 	protected static final String THEATER_REVIEWS = "reviews";
+	protected static final String USER_FILE_NAME = "src/jsons/users.json";
+	protected static final String USER_USERNAME = "username";
+	protected static final String USER_PASSWORD = "password";
+	protected static final String USER_EMAIL = "email";
+	protected static final String USER_AGE = "age";
+	protected static final String USER_POINTS = "points";
 }
