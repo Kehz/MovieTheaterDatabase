@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 
 import main.Show;
 import main.Theaters;
+import main.User;
 /*
  * This class contains the function that write the data into 
  * the json files. Could maybe be helpful with login system
@@ -52,6 +53,22 @@ public class DataWriter extends DataConstants {
 		}
 	}
 	
+	public static void saveUsers() {
+		ShowList showList = ShowList.getInstance();
+		ArrayList<User> titles = showList.getUsers();
+		JSONArray jsonTitles = new JSONArray();
+		for (int i = 0; i < titles.size(); i++) {
+			jsonTitles.add(getUsersJSON(titles.get(i)));
+		}
+		
+		try (FileWriter file = new FileWriter(USER_FILE_NAME)) {
+			file.write(jsonTitles.toJSONString());
+			file.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static JSONObject getShowsJSON(Show show) {
 		JSONObject showDetails = new JSONObject();
 		showDetails.put(SHOW_TITLE, show.getTitle());
@@ -70,6 +87,15 @@ public class DataWriter extends DataConstants {
 		theaterDetails.put(THEATER_RATINGS,theaters.getRatings());
 		theaterDetails.put(THEATER_REVIEWS,theaters.getReviews());
 		return theaterDetails;
-		
+	}
+	
+	public static JSONObject getUsersJSON(User users) {
+		JSONObject userDetails = new JSONObject();
+		userDetails.put(USER_USERNAME, users.getUsername());
+		userDetails.put(USER_PASSWORD, users.getPassword());
+		userDetails.put(USER_EMAIL, users.getEmail());
+		userDetails.put(USER_AGE, users.getAge());
+		userDetails.put(USER_POINTS, users.getPoints());
+		return userDetails;
 	}
 }
