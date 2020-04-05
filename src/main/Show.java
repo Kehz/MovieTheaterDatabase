@@ -3,22 +3,24 @@ package main;
  * Will modify this at some point to contain properly hold values from movie/play
  */
 public class Show {
+	private int id;
 	private String title;
 	private int length;
-	private int releaseYear;
 	private String genre;
 	private String director;
 	private int rating;
 	private String reviews;
+	private String showTimes;
 	
-	public Show(String title, int length, int releaseYear, String genre, String director, int rating, String reviews ) {
+	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes) {
+		this.id = id;
 		this.title = title;
 		this.length = length;
-		this.releaseYear = releaseYear;
 		this.genre = genre;
 		this.director = director;
 		this.rating = rating;
 		this.reviews = reviews;
+		this.showTimes = showTimes;
 	}
 	
 	public String getTitle() {
@@ -58,11 +60,19 @@ public class Show {
 		this.reviews = reviews;
 	}
 
-	public int getReleaseYear() {
-		return releaseYear;
+	public String getShowTimes() {
+		return showTimes;
 	}
 
-	public void setReleaseYear(int releaseYear) {
-		this.releaseYear = releaseYear;
+	public void setShowTimes(String showTimes) {
+		this.showTimes = showTimes;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

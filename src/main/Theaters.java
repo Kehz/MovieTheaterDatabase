@@ -1,11 +1,19 @@
 package main;
-
+/**
+ * @author Devin Adams
+ * Theater class for handling values
+ */
 public class Theaters {
 	private String title;
 	private int ratings;
 	private String reviews;
 	
-	
+	/**
+	 * 
+	 * @param title - Theater name
+	 * @param ratings - Theater rating
+	 * @param reviews - Theater reviews
+	 */
 	public Theaters(String title, int ratings, String reviews) {
 		this.title = title;
 		this.ratings = ratings;

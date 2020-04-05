@@ -5,27 +5,51 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import main.Movie;
+import main.Play;
 import main.Show;
 import main.Theaters;
 import main.User;
-/*
- * This class contains the function that write the data into 
- * the json files. Could maybe be helpful with login system
+/**
+ * 
+ * @author Devin Adams
+ * This class extends the DataConstants class and handles the data writing
+ * to our jsons. It takes in the current arraylists and writes the data into
+ * the file
  */
 public class DataWriter extends DataConstants {
 	
 	
-	public static void saveShows() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Show> titles = showList.getShows();
+	public static void saveMovies() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie();
 		JSONArray jsonTitles = new JSONArray();
 		
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getShowsJSON(titles.get(i)));
+		for (int i = 0; i < movieList.size(); i++) {
+			jsonTitles.add(getMoviesJSON(movieList.get(i)));
 		}
 		
 		//write json
-		try (FileWriter file = new FileWriter(SHOW_FILE_NAME)){
+		try (FileWriter file = new FileWriter(MOVIE_FILE_NAME)){
+			file.write(jsonTitles.toJSONString());
+			file.flush();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void savePlays() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Play> playList = dataLists.getPlays();
+		JSONArray jsonTitles = new JSONArray();
+		
+		for (int i = 0; i < playList.size(); i++) {
+			jsonTitles.add(getPlaysJSON(playList.get(i)));
+		}
+		
+		//write json
+		try (FileWriter file = new FileWriter(PLAY_FILE_NAME)){
 			file.write(jsonTitles.toJSONString());
 			file.flush();
 			
@@ -35,12 +59,12 @@ public class DataWriter extends DataConstants {
 	}
 	
 	public static void saveTheaters() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Theaters> titles = showList.getTheaters();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterList = dataLists.getTheaters();
 		JSONArray jsonTitles = new JSONArray();
 		
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getTheatersJSON(titles.get(i)));
+		for (int i = 0; i < theaterList.size(); i++) {
+			jsonTitles.add(getTheatersJSON(theaterList.get(i)));
 		}
 		
 		//write json
@@ -54,11 +78,12 @@ public class DataWriter extends DataConstants {
 	}
 	
 	public static void saveUsers() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<User> titles = showList.getUsers();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
 		JSONArray jsonTitles = new JSONArray();
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getUsersJSON(titles.get(i)));
+		
+		for (int i = 0; i < userList.size(); i++) {
+			jsonTitles.add(getUsersJSON(userList.get(i)));
 		}
 		
 		try (FileWriter file = new FileWriter(USER_FILE_NAME)) {
@@ -69,16 +94,34 @@ public class DataWriter extends DataConstants {
 		}
 	}
 	
-	public static JSONObject getShowsJSON(Show show) {
-		JSONObject showDetails = new JSONObject();
-		showDetails.put(SHOW_TITLE, show.getTitle());
-		showDetails.put(SHOW_LENGTH, show.getLength());
-		showDetails.put(SHOW_RELEASE_YEAR, show.getReleaseYear());
-		showDetails.put(SHOW_GENRE, show.getGenre());
-		showDetails.put(SHOW_DIRECTOR, show.getDirector());
-		showDetails.put(SHOW_RATINGS, show.getRating());
-		showDetails.put(SHOW_REVIEWS, show.getReviews());
-		return showDetails;
+	public static JSONObject getMoviesJSON(Movie movie) {
+		JSONObject movieDetails = new JSONObject();
+		movieDetails.put(MOVIE_ID, movie.getId());
+		movieDetails.put(MOVIE_TITLE, movie.getTitle());
+		movieDetails.put(MOVIE_LENGTH, movie.getLength());
+		movieDetails.put(MOVIE_RELEASE_YEAR, movie.getReleaseYear());
+		movieDetails.put(MOVIE_GENRE, movie.getGenre());
+		movieDetails.put(MOVIE_DIRECTOR, movie.getDirector());
+		movieDetails.put(MOVIE_RATINGS, movie.getRating());
+		movieDetails.put(MOVIE_REVIEWS, movie.getReviews());
+		movieDetails.put(MOVIE_AGE_RATING, movie.getAgeRating());
+		movieDetails.put(MOVIE_SHOW_TIMES, movie.getShowTimes());
+		return movieDetails;
+	}
+	
+	public static JSONObject getPlaysJSON(Play plays) {
+		JSONObject playDetails = new JSONObject();
+		playDetails.put(PLAY_ID, plays.getId());
+		playDetails.put(PLAY_TITLE, plays.getTitle());
+		playDetails.put(PLAY_LENGTH, plays.getLength());
+		playDetails.put(PLAY_GENRE, plays.getGenre());
+		playDetails.put(PLAY_DIRECTOR, plays.getDirector());
+		playDetails.put(PLAY_RATING, plays.getRating());
+		playDetails.put(PLAY_REVIEWS, plays.getReviews());
+		playDetails.put(PLAY_SHOW_TIMES, plays.getShowTimes());
+		playDetails.put(PLAY_ACTOR_AMOUNT, plays.getAmountActors());
+		playDetails.put(PLAY_TIMES_PERFORMED, plays.getTimesPerformed());
+		return playDetails;
 	}
 	
 	public static JSONObject getTheatersJSON(Theaters theaters) {

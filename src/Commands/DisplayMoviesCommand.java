@@ -1,11 +1,11 @@
 package Commands;
 
 
-public class DisplayShowsCommand implements Command{
+public class DisplayMoviesCommand implements Command{
 
 	private TheaterCommands theater;
 	
-	public DisplayShowsCommand(TheaterCommands theater) {
+	public DisplayMoviesCommand(TheaterCommands theater) {
 		this.theater = theater;
 	}
 	
