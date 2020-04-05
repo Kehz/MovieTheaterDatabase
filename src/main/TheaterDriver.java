@@ -16,7 +16,7 @@ public class TheaterDriver {
 	private Scanner scanner;
 	
 	/**
-	 * This is the function for executing our commands
+	 * This command runs the main app after login is exectuted and passes
 	 */
 	public void runTheaterDriver() {
 		Scanner in = new Scanner(System.in);
@@ -35,7 +35,10 @@ public class TheaterDriver {
 		System.out.print(prompt + ": ");
 		return in.nextLine().toLowerCase().trim();
 	}
-	
+	/**
+	 * Provides the applications greeting menu with login options for the
+	 * user to choose from
+	 */
 	public void runLogin() {
 		System.out.println(WELCOME_MESSAGE);
 		TheaterInterface ti = new TheaterInterface();
@@ -50,11 +53,6 @@ public class TheaterDriver {
 				continue;
 			}
 			if(userCommand == mainLoginMenu.length -1) break;
-			/**
-			 * These are temp print outs but the idea will be to branch
-			 * off to other parts of the program after executing these
-			 * commands.
-			 */
 			switch(userCommand) {
 			case(0):
 				ti.addUser();
@@ -100,14 +98,11 @@ public class TheaterDriver {
 		System.out.println("\n");
 
 	}
-
+	/**
+	 * Executing the runLogin command so we can begin the app
+	 */
 	public static void main(String[] args) {
 		TheaterDriver tDriver = new TheaterDriver();
 		tDriver.runLogin();
-		tDriver.runTheaterDriver();
-		
-		
-		//theaterInterface.run();
-		//testing.play();
 	}
 }

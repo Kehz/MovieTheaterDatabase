@@ -1,7 +1,10 @@
 package JSONParsing;
-/*
- * contains some constants for our json loading to make things
- * easier to modify, keep jsons stuff here only for now and probably forever
+/**
+ * 
+ * @author Devin Adams
+ * This class holds some protected variables to be used
+ * in other classes that extend it. Changing these is not a good
+ * idea
  */
 public abstract class DataConstants {
 	protected static final String SHOW_FILE_NAME = "src/jsons/movies.json";

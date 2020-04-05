@@ -4,24 +4,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import main.Show;
 import main.Theaters;
 import main.User;
-/*
- * This class contains the function that write the data into 
- * the json files. Could maybe be helpful with login system
+/**
+ * 
+ * @author Devin Adams
+ * This class extends the DataConstants class and handles the data writing
+ * to our jsons. It takes in the current arraylists and writes the data into
+ * the file
  */
 public class DataWriter extends DataConstants {
 	
 	
 	public static void saveShows() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Show> titles = showList.getShows();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Show> showList = dataLists.getShows();
 		JSONArray jsonTitles = new JSONArray();
 		
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getShowsJSON(titles.get(i)));
+		for (int i = 0; i < showList.size(); i++) {
+			jsonTitles.add(getShowsJSON(showList.get(i)));
 		}
 		
 		//write json
@@ -35,12 +37,12 @@ public class DataWriter extends DataConstants {
 	}
 	
 	public static void saveTheaters() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Theaters> titles = showList.getTheaters();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterList = dataLists.getTheaters();
 		JSONArray jsonTitles = new JSONArray();
 		
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getTheatersJSON(titles.get(i)));
+		for (int i = 0; i < theaterList.size(); i++) {
+			jsonTitles.add(getTheatersJSON(theaterList.get(i)));
 		}
 		
 		//write json
@@ -54,11 +56,12 @@ public class DataWriter extends DataConstants {
 	}
 	
 	public static void saveUsers() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<User> titles = showList.getUsers();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
 		JSONArray jsonTitles = new JSONArray();
-		for (int i = 0; i < titles.size(); i++) {
-			jsonTitles.add(getUsersJSON(titles.get(i)));
+		
+		for (int i = 0; i < userList.size(); i++) {
+			jsonTitles.add(getUsersJSON(userList.get(i)));
 		}
 		
 		try (FileWriter file = new FileWriter(USER_FILE_NAME)) {

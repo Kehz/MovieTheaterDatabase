@@ -9,13 +9,19 @@ import main.Show;
 import main.Theaters;
 import main.User;
 
-/*
- * parses our jsons and loads them into array lists
+/**
  * 
+ * @author Devin Adams
+ * This class parses the data from our json files while gettings its
+ * object info from the DataConstants file. It adds the values to the 
+ * array lists which will be returned and called from DataLists class
  */
 public class DataLoader extends DataConstants{
 	
-	
+	/**
+	 * This function loads data from the json file and adds it to an arraylist
+	 * @return returns an array list of shows parsed from the shows.json
+	 */
     public static ArrayList<Show> loadShows() {
     	ArrayList<Show> shows = new ArrayList<Show>();
     	
@@ -45,10 +51,12 @@ public class DataLoader extends DataConstants{
     	}
     	return null;
     }	
-    
+    /**
+	 * This function loads data from the json file and adds it to an arraylist
+	 * @return returns an array list of theaters parsed from the theaters.json
+	 */
     public static ArrayList<Theaters> loadTheaters() {
     	ArrayList<Theaters> theaters = new ArrayList<Theaters>();
-    	
     	try {
     		FileReader reader = new FileReader(THEATER_FILE_NAME);
     		JSONParser parser = new JSONParser();
@@ -70,7 +78,10 @@ public class DataLoader extends DataConstants{
     	}
     	return null;
     }
-    
+    /**
+     * This function loads data from the json file and adds it to an arraylist
+     * @return returns an array list of users parsed from the users.json
+     */
     public static ArrayList<User> loadUsers() {
     	ArrayList<User> users = new ArrayList<User>();
     	try {

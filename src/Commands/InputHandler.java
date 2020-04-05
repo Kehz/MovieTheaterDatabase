@@ -1,6 +1,11 @@
 package Commands;
 import java.util.HashMap;
-
+/**
+ * 
+ * @author Devin Adams
+ * This is the command design pattern being implemented. Easy way to load in commands
+ * to be used in our interface. Functions as the main menus commands.
+ */
 public class InputHandler {
 	private HashMap<String, Command> commands = new HashMap<>();
 	

@@ -2,11 +2,15 @@ package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import JSONParsing.ShowList;
 
-/*
- * This class is handing our adding to our array lists for movies/theaters
- * Also contains functions for displaying the current movies / theaters in the json
+import JSONParsing.DataWriter;
+import JSONParsing.DataLists;
+
+/**
+ * 
+ * @author Devin Adams
+ * This class is the main apps interfacing which holds our main functions
+ * involving interating with our user login and displaying/adding theaters and shows.
  */
 public class TheaterInterface {
 	private Scanner scanner;
@@ -14,9 +18,11 @@ public class TheaterInterface {
 	public TheaterInterface() {
 		scanner = new Scanner(System.in);
 	}
-	
+	/**
+	 * Displays current shows and adds them to our arraylist
+	 */
 	public void addShow() {
-		ShowList showList = ShowList.getInstance();
+		DataLists dataLists = DataLists.getInstance();
 		System.out.println("****** Displaying Current Movies In The Database ******");
 		displayShows();
 		
@@ -29,12 +35,14 @@ public class TheaterInterface {
 			int length = getIntField("Length");
 			int releaseYear = getIntField("Release Year");
 			
-			showList.addShow(title, length, releaseYear, genre, director, rating, reviews);
+			dataLists.addShow(title, length, releaseYear, genre, director, rating, reviews);
 		}
 	}
-	
+	/**
+	 * Displays current theaters and adds them to our arraylist
+	 */
 	public void addTheater() {
-		ShowList showList = ShowList.getInstance();
+		DataLists dataLists = DataLists.getInstance();
 		System.out.println("****** Displaying Current Theaters In The Database ******");
 		displayTheaters();
 		
@@ -42,12 +50,14 @@ public class TheaterInterface {
 			String title = getField("Title");;
 			String reviews = getField("Reviews");
 			int rating = getIntField("Rating");
-			showList.addTheater(title, rating, reviews);
+			dataLists.addTheater(title, rating, reviews);
 		}
 	}
-	
+	/**
+	 * Function for handling creating an account and adding it into our arraylist
+	 */
 	public void addUser() {
-		ShowList showList = ShowList.getInstance();
+		DataLists dataLists = DataLists.getInstance();
 		System.out.println("Create an account by entering following credentials");
 		boolean test = true;
 		while(test) {
@@ -56,7 +66,7 @@ public class TheaterInterface {
 			String email = getField("Enter email: ");
 			int age = getIntField("Enter age: ");
 			int points = 0;
-			showList.addUser(username, password, email, age, points);
+			dataLists.addUser(username, password, email, age, points);
 			test = false;
 		}
 	}
@@ -89,35 +99,38 @@ public class TheaterInterface {
 		return false;
 	}
 	
+	 /**
+	  * Prints out shows
+	  */
 	public void displayShows() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Show> titles = showList.getShows();
-		String search = "Frozen 2";
-		for(Show show : titles) {
-			if(show.getTitle() != null && show.getTitle().contains(search)) {
-				System.out.println(show.getTitle());
-			}
-		}
-
-		for(Show show : titles) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Show> showList = dataLists.getShows();
+		for(Show show : showList) {
 			System.out.println("\n Title: " + show.getTitle() + "\n Movie Length: " + show.getLength() + "\n Release Year: " + show.getReleaseYear() + "\n Genre: " 
 								+ show.getGenre() +"\n Director: " + show.getDirector() + "\n Rating: " 
 								+ show.getRating() + "\n ======================");
 		}
 	}
+	/**
+	 * Prints out theaters
+	 */
 	public void displayTheaters() {
-		ShowList showList = ShowList.getInstance();
-		ArrayList<Theaters> titles = showList.getTheaters();
-		for(Theaters theaters : titles) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterLists = dataLists.getTheaters();
+		for(Theaters theaters : theaterLists) {
 			System.out.println("\n Name: " +theaters.getTitle() + "\n Ratings: " + theaters.getRatings() 
 								+ "\n Reviews: " +theaters.getReviews() 
 								+ "\n =======================");
 		}
 	}
+	/**
+	 * This function works as a login system for our program. 
+	 * @return True if username/password match | False if username/password do not match
+	 */
 	public boolean login() {
 		Scanner scanner = new Scanner(System.in);
-		ShowList showList = ShowList.getInstance();
-		ArrayList<User> titles = showList.getUsers();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userLists = dataLists.getUsers();
 		System.out.println("Enter username: ");
 		String username = scanner.nextLine();
 		// String email = scanner.nextLine();
@@ -126,7 +139,7 @@ public class TheaterInterface {
 		
 		boolean found = true;
 		
-		for(User users : titles) {
+		for(User users : userLists) {
 			if((users.getUsername() != null && users.getUsername().contains(username)) && (users.getPassword() != null && users.getPassword().contains(password))) {
 				System.out.println("Succesfully Logged In!");
 				found = true;

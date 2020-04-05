@@ -1,8 +1,11 @@
 package Commands;
 
 import main.TheaterInterface;
-/*
- * This is where we wil place our user commands
+/**
+ * 
+ * @author Devin Adams
+ * This class holds the commands to be loading into our input handler
+ * for the command design pattern.
  */
 public class TheaterCommands {
 	TheaterInterface ti = new TheaterInterface();

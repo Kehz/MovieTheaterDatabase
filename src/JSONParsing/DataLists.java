@@ -4,24 +4,34 @@ import java.util.ArrayList;
 import main.Show;
 import main.Theaters;
 import main.User;
-public class ShowList {
-	private static ShowList showList = null;
+/**
+ * 
+ * @author Devin Adams
+ * This class handles the instances of our json parsing. It creates
+ * new arraylists of our class objects and loads the data from the
+ * their json into them to be used across the app. Also hands adding
+ * objects into the arraylist and saving them to the json.
+ */
+public class DataLists {
+	private static DataLists dataLists = null;
 	private static ArrayList<Show> shows = new ArrayList<Show>();
 	private static ArrayList<Theaters> theaters = new ArrayList<Theaters>();
 	private static ArrayList<User> users = new ArrayList<User>();
-	
-	private ShowList() {
+	/**
+	 * This constructor loads the arraylists with values from the DataLoader class
+	 */
+	private DataLists() {
 		shows = DataLoader.loadShows();
 		theaters = DataLoader.loadTheaters();
 		users = DataLoader.loadUsers();
 	}
 	
 	
-	public static ShowList getInstance() {
-		if(showList == null) {
-			showList = new ShowList();
+	public static DataLists getInstance() {
+		if(dataLists == null) {
+			dataLists = new DataLists();
 		}
-		return showList;
+		return dataLists;
 	}
 	
 	public ArrayList<Show> getShows() {
