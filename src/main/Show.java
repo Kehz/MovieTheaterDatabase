@@ -1,4 +1,7 @@
 package main;
+
+import java.util.ArrayList;
+
 /*
  * Will modify this at some point to contain properly hold values from movie/play
  */
@@ -9,10 +12,11 @@ public class Show {
 	private String genre;
 	private String director;
 	private int rating;
-	private String reviews;
-	private String showTimes;
+	private ArrayList<String> reviews;
+	private ArrayList<String> showTimes;
+	private ArrayList<String> inTheaters;
 	
-	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes) {
+	public Show(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters) {
 		this.id = id;
 		this.title = title;
 		this.length = length;
@@ -21,6 +25,7 @@ public class Show {
 		this.rating = rating;
 		this.reviews = reviews;
 		this.showTimes = showTimes;
+		this.inTheaters = inTheaters;
 	}
 	
 	public String getTitle() {
@@ -53,18 +58,18 @@ public class Show {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public String getReviews() {
+	public ArrayList<String> getReviews() {
 		return reviews;
 	}
-	public void setReviews(String reviews) {
+	public void setReviews(ArrayList<String> reviews) {
 		this.reviews = reviews;
 	}
 
-	public String getShowTimes() {
+	public ArrayList<String> getShowTimes() {
 		return showTimes;
 	}
 
-	public void setShowTimes(String showTimes) {
+	public void setShowTimes(ArrayList<String> showTimes) {
 		this.showTimes = showTimes;
 	}
 
@@ -74,5 +79,13 @@ public class Show {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public ArrayList<String> getInTheaters() {
+		return inTheaters;
+	}
+
+	public void setInTheaters(ArrayList<String> inTheaters) {
+		this.inTheaters = inTheaters;
 	}
 }

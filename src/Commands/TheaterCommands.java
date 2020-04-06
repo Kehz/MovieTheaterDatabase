@@ -10,7 +10,7 @@ import main.User;
  */
 public class TheaterCommands {
 	TheaterInterface ti = new TheaterInterface();
-	User us = new User(null, null, null, 0, 0);
+	User us = new User(null, null, null, 0, 0, 0, 0, null, null);
 	
 	public void displayMovies() {	
 		ti.displayMovies();
@@ -42,5 +42,9 @@ public class TheaterCommands {
 	
 	public void updateUsername() {
 		us.updateUserName();
+	}
+	
+	public void testFunction() {
+		us.testArrayListSizeAndRemoving();
 	}
 }
