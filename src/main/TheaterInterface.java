@@ -160,6 +160,7 @@ public class TheaterInterface {
 	 * @return True if username/password match | False if username/password do not match
 	 */
 	public boolean login() {
+		User us = new User(null, null, null, 0, 0);
 		Scanner scanner = new Scanner(System.in);
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userLists = dataLists.getUsers();
@@ -174,6 +175,7 @@ public class TheaterInterface {
 		for(User users : userLists) {
 			if((users.getUsername() != null && users.getUsername().contains(username)) && (users.getPassword() != null && users.getPassword().contains(password))) {
 				System.out.println("Succesfully Logged In!");
+				us.updateCurrentUser(users.getUsername(), users.getPassword(), users.getEmail(), users.getPoints(), users.getAge());
 				found = true;
 				if (found == true) {
 					break;
@@ -185,7 +187,6 @@ public class TheaterInterface {
 		if (found == false) {
 			System.out.println("Login info incorrect");
 		}
-		scanner.close();
 		return found;
 	}
 }
