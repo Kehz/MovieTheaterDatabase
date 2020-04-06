@@ -16,6 +16,9 @@ public class InputHandler {
 		commands.put("show theaters", new DisplayTheatersCommand(theater));
 		commands.put("enter play", new EnterPlayCommand(theater));
 		commands.put("show plays", new DisplayPlaysCommand(theater));
+		commands.put("show user", new DisplayCurrentUser(theater));
+		commands.put("update username", new UpdateUsernameCommand(theater));
+		commands.put("test", new TestCommand(theater));
 	}
 	
 	public void inputEntered(String data) {

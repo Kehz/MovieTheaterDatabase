@@ -54,24 +54,24 @@ public class DataLists {
 		return users;
 	}
 	
-	public void addMovie(int id, String title, int length, String genre, String director, int rating, String reviews,String showTimes, String ageRating, int releaseYear) {
-		movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, ageRating, releaseYear));
+	public void addMovie(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews,ArrayList<String> showTimes, ArrayList<String> inTheaters, String ageRating, int releaseYear) {
+		movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, ageRating, releaseYear));
 		DataWriter.saveMovies();
 	}
 	
-	public void addPlay(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, int amountActors, int timesPerformed) {
-		plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, amountActors, timesPerformed));
+	public void addPlay(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters, int amountActors, int timesPerformed) {
+		plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, amountActors, timesPerformed));
 		DataWriter.savePlays();
 	}
 	
 	
-	public void addTheater(String name, int ratings, String reviews) {
-		theaters.add(new Theaters(name, ratings, reviews));
+	public void addTheater(int id, String name, int ratings, ArrayList<String >reviews, int employeeID) {
+		theaters.add(new Theaters(id, name, ratings, reviews, employeeID));
 		DataWriter.saveTheaters();
 	}
 	
-	public void addUser(String username, String password, String email, int age, int points) {
-		users.add(new User(username, password, email, age, points));
+	public void addUser(String username, String password, String email, int age, int points, int employeeID, int discountType, ArrayList<String> shoppingCart, ArrayList<String> ticketCount) {
+		users.add(new User(username, password, email, age, points, employeeID, discountType, shoppingCart, ticketCount));
 		DataWriter.saveUsers();
 	}
 }

@@ -7,7 +7,6 @@ import org.json.simple.JSONObject;
 
 import main.Movie;
 import main.Play;
-import main.Show;
 import main.Theaters;
 import main.User;
 /**
@@ -106,6 +105,7 @@ public class DataWriter extends DataConstants {
 		movieDetails.put(MOVIE_REVIEWS, movie.getReviews());
 		movieDetails.put(MOVIE_AGE_RATING, movie.getAgeRating());
 		movieDetails.put(MOVIE_SHOW_TIMES, movie.getShowTimes());
+		movieDetails.put(MOVIE_IN_THEATERS, movie.getInTheaters());
 		return movieDetails;
 	}
 	
@@ -119,6 +119,7 @@ public class DataWriter extends DataConstants {
 		playDetails.put(PLAY_RATING, plays.getRating());
 		playDetails.put(PLAY_REVIEWS, plays.getReviews());
 		playDetails.put(PLAY_SHOW_TIMES, plays.getShowTimes());
+		playDetails.put(PLAY_IN_THEATERS, plays.getInTheaters());
 		playDetails.put(PLAY_ACTOR_AMOUNT, plays.getAmountActors());
 		playDetails.put(PLAY_TIMES_PERFORMED, plays.getTimesPerformed());
 		return playDetails;
@@ -126,9 +127,11 @@ public class DataWriter extends DataConstants {
 	
 	public static JSONObject getTheatersJSON(Theaters theaters) {
 		JSONObject theaterDetails = new JSONObject();
+		theaterDetails.put(THEATER_ID, theaters.getId());
 		theaterDetails.put(THEATER_NAME,theaters.getTitle());
 		theaterDetails.put(THEATER_RATINGS,theaters.getRatings());
 		theaterDetails.put(THEATER_REVIEWS,theaters.getReviews());
+		theaterDetails.put(THEATER_EMPLOYEE_ID, theaters.getEmployeeID());
 		return theaterDetails;
 	}
 	
@@ -139,6 +142,10 @@ public class DataWriter extends DataConstants {
 		userDetails.put(USER_EMAIL, users.getEmail());
 		userDetails.put(USER_AGE, users.getAge());
 		userDetails.put(USER_POINTS, users.getPoints());
+		userDetails.put(USER_SHOPPING_CART, users.getShoppingCart());
+		userDetails.put(USER_EMPLOYEE_ID, users.getEmployeeID());
+		userDetails.put(USER_DISCOUNT_TYPE, users.getDiscountType());
+		userDetails.put(USER_TICKET_CART, users.getTicketCart());
 		return userDetails;
 	}
 }

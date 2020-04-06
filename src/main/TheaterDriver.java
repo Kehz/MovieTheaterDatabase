@@ -13,7 +13,6 @@ import Commands.TheaterCommands;
 public class TheaterDriver {
 	private static final String WELCOME_MESSAGE = "Welcome to the MovieApp";
 	private String[] mainLoginMenu = {"Create Account", "Continue as Guest", "Login", "Employee Login", "Exit"}; 
-	
 	/**
 	 * This command runs the main app after login is exectuted and passes
 	 */

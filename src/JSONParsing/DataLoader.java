@@ -1,6 +1,9 @@
 package JSONParsing;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -41,15 +44,19 @@ public class DataLoader extends DataConstants{
     			String genre = (String)movieListJSON.get(MOVIE_GENRE);
     			String director = (String)movieListJSON.get(MOVIE_DIRECTOR);
     			long longRating = (long)movieListJSON.get(MOVIE_RATINGS);
-    			String reviews = (String)movieListJSON.get(MOVIE_REVIEWS);
-    			String showTimes = (String)movieListJSON.get(MOVIE_SHOW_TIMES);
+    			JSONArray reviewArray = (JSONArray)movieListJSON.get(MOVIE_REVIEWS);
+    			JSONArray showTimeArray = (JSONArray)movieListJSON.get(MOVIE_SHOW_TIMES);
+    			JSONArray inTheaterArray = (JSONArray)movieListJSON.get(MOVIE_IN_THEATERS);
     			String ageRating = (String)movieListJSON.get(MOVIE_AGE_RATING);
     			int id = (int)longId;
     			int length = (int)longLength;
     			int releaseYear = (int)longReleaseYear;
     			int rating = (int)longRating;
     			
-    			movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, ageRating, releaseYear));
+    			ArrayList<String> showTimes = addToArrayList(showTimeArray);
+    			ArrayList<String> reviews = addToArrayList(reviewArray);
+    			ArrayList<String> inTheaters = addToArrayList(inTheaterArray);
+    			movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, ageRating, releaseYear));
     		}
     		return movies;
     	} catch (Exception e) {
@@ -74,8 +81,9 @@ public class DataLoader extends DataConstants{
     			String genre = (String)playListJSON.get(PLAY_GENRE);
     			String director = (String)playListJSON.get(PLAY_DIRECTOR);
     			long longRating = (long)playListJSON.get(PLAY_RATING);
-    			String reviews = (String)playListJSON.get(PLAY_REVIEWS);
-    			String showTimes = (String)playListJSON.get(PLAY_SHOW_TIMES);
+    			JSONArray reviewArray = (JSONArray)playListJSON.get(PLAY_REVIEWS);
+    			JSONArray showTimeArray = (JSONArray)playListJSON.get(PLAY_SHOW_TIMES);
+    			JSONArray inTheaterArray = (JSONArray)playListJSON.get(PLAY_IN_THEATERS);
     			long longActorAmount = (long)playListJSON.get(PLAY_ACTOR_AMOUNT);
     			long longTimesPerformed = (long)playListJSON.get(PLAY_TIMES_PERFORMED);
     			int id = (int)longId;
@@ -83,8 +91,11 @@ public class DataLoader extends DataConstants{
     			int rating = (int)longRating;
     			int actorAmount = (int)longActorAmount;
     			int timesPerformed = (int)longTimesPerformed;
-    			
-    			plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, actorAmount, timesPerformed));
+    	
+    			ArrayList<String> showTimes = addToArrayList(showTimeArray);
+    			ArrayList<String> reviews = addToArrayList(reviewArray);
+    			ArrayList<String> inTheaters = addToArrayList(inTheaterArray);
+    			plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, actorAmount, timesPerformed));
     		}
     		return plays;
     	} catch (Exception e) {
@@ -104,14 +115,18 @@ public class DataLoader extends DataConstants{
     		FileReader reader = new FileReader(THEATER_FILE_NAME);
     		JSONParser parser = new JSONParser();
     		JSONArray theaterJSON = (JSONArray)new JSONParser().parse(reader);
-    		
     		for (int i = 0; i < theaterJSON.size(); i++) {
     			JSONObject theaterListJSON = (JSONObject)theaterJSON.get(i);
+    			long longId = (long)theaterListJSON.get(THEATER_ID);
     			String title = (String)theaterListJSON.get(THEATER_NAME);
-    			long rating = (long)theaterListJSON.get(THEATER_RATINGS);
-    			String reviews = (String)theaterListJSON.get(THEATER_REVIEWS);
-    			int intRating = (int)rating;
-    			theaters.add(new Theaters(title, intRating, reviews));
+    			long longRating = (long)theaterListJSON.get(THEATER_RATINGS);
+    			JSONArray reviewsArray = (JSONArray)theaterListJSON.get(THEATER_REVIEWS);
+    			long longEmployeeID = (long)theaterListJSON.get(THEATER_EMPLOYEE_ID);
+    			int rating = (int)longRating;
+    			int employeeID = (int)longEmployeeID;
+    			int id = (int)longId;
+    			ArrayList<String> reviews = addToArrayList(reviewsArray);
+    			theaters.add(new Theaters(id,title, rating, reviews, employeeID));
     		}
     		return theaters;
     	} catch (Exception e) {
@@ -134,11 +149,19 @@ public class DataLoader extends DataConstants{
     			String username = (String)userJSONList.get(USER_USERNAME);
     			String password = (String)userJSONList.get(USER_PASSWORD);
     			String email = (String)userJSONList.get(USER_EMAIL);
+    			JSONArray shoppingArray = (JSONArray)userJSONList.get(USER_SHOPPING_CART);
+    			JSONArray ticketArray = (JSONArray)userJSONList.get(USER_TICKET_CART);
+    			long longEmployeeID = (long)userJSONList.get(USER_EMPLOYEE_ID);
     			long longAge = (long)userJSONList.get(USER_AGE);
     			long longPoints = (long)userJSONList.get(USER_POINTS);
+    			long longDiscountType = (long)userJSONList.get(USER_DISCOUNT_TYPE);
     			int age = (int)longAge;
     			int points = (int)longPoints;
-    			users.add(new User(username, password, email, age, points));
+    			int employeeID = (int)longEmployeeID;
+    			int discountType = (int)longDiscountType;
+    			ArrayList<String> shoppingCart = addToArrayList(shoppingArray);
+    			ArrayList<String> ticketCart = addToArrayList(ticketArray);
+    			users.add(new User(username, password, email, age, points,employeeID, discountType,shoppingCart,ticketCart));
     		}
     		return users;
     	} catch (Exception e) {
@@ -146,5 +169,17 @@ public class DataLoader extends DataConstants{
     	}
     	return null;
     }
-    	
+    /**
+     * This function takes in a jsonArray and iterates it and adds it to an arraylist
+     * @param jsonArray - takes in a jsonArray 
+     * @return returns an arraylist
+     */
+    private static ArrayList<String> addToArrayList(JSONArray jsonArray) {
+    	Iterator<String> iterator = jsonArray.iterator();
+		ArrayList<String> array = new ArrayList<String>();
+		while (iterator.hasNext()) {
+			array.add(iterator.next());
+		}
+    	return array;
+    }
 }
