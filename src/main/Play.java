@@ -3,8 +3,8 @@ package main;
 public class Play extends Show {
 	private int amountActors;
 	private int timesPerformed;
-	public Play(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, int amountActors, int timesPerformed) {
-		super(id,title, length, genre, director, rating, reviews, showTimes);
+	public Play(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, Boolean[][] seating, double price, int amountActors, int timesPerformed) {
+		super(id,title, length, genre, director, rating, reviews, showTimes, seating, price);
 		this.amountActors = amountActors;
 		this.timesPerformed = timesPerformed;
 	}

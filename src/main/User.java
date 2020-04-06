@@ -1,6 +1,8 @@
 package main;
+import java.util.Scanner;
 
 public class User {
+	Scanner in = new Scanner(System.in);
 	private String username;
 	private String password;
 	private String email;
@@ -78,4 +80,60 @@ public class User {
 		this.points = points;
 	}
 	
+	public void orderTicket() {
+		viewTheaters();
+		viewShows();
+		reserveSeating();
+		checkout();
+	}
+	
+	public void viewTheaters() {
+		//need instance of TheaterInterface
+		TheaterInterface thing= new TheaterInterface();//just to make sure the logic is right
+		thing.displayTheaters();
+		//select a theater
+		System.out.println("What theater would you like to select?");
+		//type in selection
+		String selection;
+		selection=in.nextLine();
+		//check to see if there is a match in the arraylist, then set that to selection
+		//return selection
+	}
+	
+	public void viewShows() {
+		//need instance of TheaterInterface
+		TheaterInterface thing= new TheaterInterface();//just to make sure the logic is right
+		thing.displayMovies();
+		thing.displayPlays();
+		//select a show
+		System.out.println("What show would you like to select?");
+		//type in selection
+		String selection;
+		selection=in.nextLine();
+		//check to see if there is a match in the arraylists, then set that to selection
+		//return selection
+	}
+	
+	public void reserveSeating() {
+		Show temp = new Show();//just a placeholder
+		Boolean[][] seats=temp.getSeating();
+		System.out.println("What row would you like to select?");
+		//type in seat selection
+		int row;
+		row=in.nextInt();
+		System.out.println("What column would you like to select?");
+		//type in seat selection
+		int column;
+		column=in.nextInt();
+		seats[row][column]=true;
+		temp.setSeating(seats);
+	}
+	
+	public void checkout() {
+		Show temp = new Show();//just a placeholder
+		double cost= temp.getPrice();
+		System.out.println("A ticket to this show will cost " + cost + " dollars");
+		//implement discount methods here
+		double payment= in.nextDouble();
+	}
 }

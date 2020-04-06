@@ -1,4 +1,5 @@
 package main;
+import java.util.Arrays;
 /*
  * Will modify this at some point to contain properly hold values from movie/play
  */
@@ -11,8 +12,10 @@ public class Show {
 	private int rating;
 	private String reviews;
 	private String showTimes;
+	private Boolean[][] seating;
+	private double price;
 	
-	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes) {
+	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, Boolean[][] seating, double price) {
 		this.id = id;
 		this.title = title;
 		this.length = length;
@@ -21,6 +24,8 @@ public class Show {
 		this.rating = rating;
 		this.reviews = reviews;
 		this.showTimes = showTimes;
+		this.seating= seating;
+		this.price=price;
 	}
 	
 	public String getTitle() {
@@ -74,5 +79,20 @@ public class Show {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Boolean[][] getSeating() {
+		return seating;
+	}
+	public void setSeating(Boolean[][]seating) {
+		this.seating=seating;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double price) {
+		this.price=price;
 	}
 }
