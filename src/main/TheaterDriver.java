@@ -12,18 +12,17 @@ import Commands.InputHandler;
 import Commands.TheaterCommands;
 public class TheaterDriver {
 	private static final String WELCOME_MESSAGE = "Welcome to the MovieApp";
-	private String[] mainLoginMenu = {"Create Account", "Continue as Guest", "Login", "Employee Login", "Exit"}; 
+	private String[] mainLoginMenu = {"Create Account", "Continue as Guest", "Login", "Exit"}; 
 	/**
 	 * This command runs the main app after login is exectuted and passes
 	 */
 	public void runTheaterDriver() {
+		User user = new User(null, null, null, 0, 0, 0, 0, null, null);
 		Scanner in = new Scanner(System.in);
 		TheaterCommands theater = new TheaterCommands();
 		InputHandler inHandler = new InputHandler(theater);
-		System.out.println("Current commands are: show movies,show theaters, enter movie, enter theater"
-							+ "\n show plays, enter play");
-		
 		while(true) {
+			user.userMainMenu();
 			String command = getInputLine("Enter Command", in);
 			if(command.contentEquals("logout"))break;
 			inHandler.inputEntered(command);
@@ -57,7 +56,7 @@ public class TheaterDriver {
 				ti.addUser();
 				break;
 			case(1):
-				System.out.println("Proceeding as a Guest User \n Some features will be inaccessible");
+				System.out.println("Proceeding as a Guest User\nSome features will be inaccessible");
 				runTheaterDriver();
 				break;
 			case(2):
@@ -66,13 +65,9 @@ public class TheaterDriver {
 				} else {
 					break;	
 				}
-			case(3):
-				System.out.println("Enter Employee Login Details: Username / Theater ID / Password");
-				break;
-			}
-
 		}
 		System.out.println("Exiting Program");
+		}
 	}
 
 	private int getUserCommand(int numCommands) {
@@ -89,7 +84,7 @@ public class TheaterDriver {
 	}
 
 	private void printLoginMenu() {
-		System.out.println("\n******************* Main Menu *******************");
+		System.out.println("\n******************* Login Menu *******************");
 
 		for (int i = 0; i < mainLoginMenu.length; i++) {
 			System.out.println((i+1) + ". " + mainLoginMenu[i]);
