@@ -276,7 +276,13 @@ public class User {
 	 * Will access the member users ticketCart() and remove the ticket and refund the money to the user [if you want to deal with a users wallet amount you can add that into the jsons/parsing yourself. Im ignoring that]
 	 */
 	public void requestRefund() {
-		
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for(User users : userList) {
+			for(int i = 0; i < users.getTicketCart().size(); i++) {
+				users.getTicketCart().remove(i); //could just display message that their card will be refunded instead of dealing with a wallet
+			}
+		}
 	}
 	/**
 	 * Removes the data from the users list.
