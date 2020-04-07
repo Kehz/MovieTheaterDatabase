@@ -15,6 +15,15 @@ public class User {
 	public static String currEmail;
 	public static int currPoints;
 	public static int currAge;
+	public static String workingAt;
+	public static int currEmployeeID;
+	/**
+	 * These are some arrays for printing menus
+	 */
+	private String[] guestMenuOptions = {"Order Tickets", "Display Movies", "Display Shows" , "Search Shows", "Search Theaters", "View Shopping Cart", "Checkout", "Print Tickets", "Logout"};
+	private String[] memberMenuOptions = {"Order Tickets", "Display Movies", "Display Shows" , "Search Shows",
+										"Search Theaters", "Checkout", "Refund", "Print Tickets","View Shopping Cart", "View Ticket List", "Change Account Details", "Logout"};
+	private String[] employeeMenuOptions = {"Add Show To Theater", "Update Show Times", "Display Shows", "Logout"};
 	/**
 	 * Variables for our User object. THESE ARE NOT THE CURRENT USER
 	 */
@@ -47,12 +56,83 @@ public class User {
 		this.ticketCart = ticketCart;
 	}
 	
-	public void updateCurrentUser(String currUserName,String currPassword, String currEmail, int currPoints, int currAge ) {
+	public void updateCurrentUser(String currUserName,String currPassword, String currEmail, int currPoints, int currAge) {
 		User.currUserName = currUserName;
 		User.currPassword = currPassword;
 		User.currEmail = currEmail;
 		User.currPoints = currPoints;
 		User.currAge = currAge;
+	}
+	
+	public void userMainMenu() {
+		System.out.println("\nMovie Theater Application ");
+		int currentUserType = getUserType();
+		if (currentUserType == 0) {
+			printGuestMenu();
+		} else if (currentUserType == 1) {
+			printMemberMenu();
+		} else if (currentUserType == 2) {
+			printEmployeeMenu();
+		}
+	}
+	
+	private int getUserType() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		if(currUserName == null) {
+			currEmployeeID = 0;
+			return 0;
+		} 
+		for(User users : userList) {
+			if ((users.getUsername() == currUserName) && (users.getEmployeeID() == 0)) {
+				currEmployeeID = 0;
+				return 1;
+			} else if ((users.getUsername() == currUserName) && (users.getEmployeeID() != 0)) {
+				currEmployeeID = users.getEmployeeID();
+				updateEmployeeWorking();
+				return 2;
+			}
+		}
+		System.out.println("Error! Unable to get the user type. Proceeding as guest. (How did this happen?)");
+		return 0;
+	}
+	
+	private void updateEmployeeWorking() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterList = dataLists.getTheaters();
+		for(Theaters theaters : theaterList) {
+			if(theaters.getEmployeeID() == currEmployeeID) {
+				workingAt = theaters.getTitle();
+				return;
+			}
+		}
+	}
+	
+	private void printGuestMenu() {
+		System.out.println("\nMember: Guest");
+		System.out.println("=========================");
+		for (int i = 0; i < guestMenuOptions.length; i++) {
+			System.out.println(guestMenuOptions[i]);
+		}
+		System.out.println("=========================");
+	}
+	
+	private void printMemberMenu() {
+		System.out.println("\nMember: " + currUserName + " Points: " + currPoints);
+		System.out.println("=========================");
+		for(int i = 0; i < memberMenuOptions.length; i++) {
+			System.out.println(memberMenuOptions[i]);
+		}
+		System.out.println("=========================");
+	}
+	
+	private void printEmployeeMenu() {
+		System.out.println("\nMember: " + currUserName + " Theater: " + workingAt);
+		System.out.println("=========================");
+		for(int i = 0; i < employeeMenuOptions.length; i++) {
+			System.out.println(employeeMenuOptions[i]);
+		}
+		System.out.println("=========================");
 	}
 	
 	public void displayCurrentUserInfo() {
@@ -78,19 +158,17 @@ public class User {
 		System.out.println("You must log back in with your new info to update the changes. \n Type 'logout' to logout");
 	}
 	/**
-	 * Current idea is to add a ticket into an array of some sort and fill that array
-	 * with data from ArrayList<Movie/Play> and data from ArrayList<Theater> and 
-	 * then add be able to print out the contents of that array to a pretty looking ticket.txt
-	 * printTicket can also be another function. May need to add an object to the users.json if 
-	 * we want to save the data of the cart to be used later. Each play/theater/movie has an id for easy ordering.
-	 * Should also ask if you want to use rewards points for a discount i guess you can integrate that however you like
+	 * Allow the user to pick a movie and a theater playing that movie. As well as it's showtime
+	 * Only need the info from Movie/Play ArrayList now. ie.) movies.getTitle() / movies.getShowTimes() / movies.inTheaters()
+	 * Append them to variables and you can add it to the users shopping cart users.getShoppingCart() etc....
+	 * 
 	 */
 	public void orderTicket() {
 		
 	}
 	
 	/**
-	 * Testing adding reviews to a movie array in the JSON. (it works)
+	 * Example function for adding a review to a movie
 	 */
 	public void testFunction() {
 		System.out.println("Command Fired"); //just testing to see if they command is executed
@@ -108,7 +186,7 @@ public class User {
 		}
 	}
 	/**
-	 * Showing a mockup of how the new array inside the movie/play json "inTheaters" works in the movie/play arraylist and how to modify them.
+	 * Example function for adding a theater to a shows playing at array = movies/plays.getInTheater()
 	 */
 	public void testAddTheaterToShowFunction() {
 		DataLists dataLists = DataLists.getInstance(); //we know what this does now
@@ -145,9 +223,7 @@ public class User {
 		
 	}
 	/**
-	 * this is a test function to be used as referecne for ordering the tickets.
-	 * this is not the ordet ticket function just a really good reference for it. can probably be broken down into multiple commands
-	 * YOU NEED TO BE LOGGED INTO AN ACCOUNT FOR THIS ONE TO WORK BECAUSE ITS COMPARING WITH currUserName WHICH IS ASSIGNED WHENEVER A SUCCESSFULL LOGIN HAPPENS
+	 * Example function for adding tickets to the shopping cart and then adding that to the member users owned ticket list/cart
 	 */
 	public void testArrayListSizeAndRemoving() {
 		DataLists dataLists = DataLists.getInstance();
@@ -173,7 +249,7 @@ public class User {
 			}
 		}
 		//at this point we have a shopping cart
-		for(User users : userList) {
+		for(User users : userList) {			
 			if(users.getUsername() == currUserName) {
 				double ticketCount = users.getShoppingCart().size(); //getting the size of the cart. aka how many tickets are inside
 				System.out.println(users.getShoppingCart()); // test print out
@@ -196,43 +272,34 @@ public class User {
 			}
 		}
 	}
-	
 	/**
-	 * display current rewards maybe might just integrate this witht he main menu of the user when its finished
-	 * ex.) ________ [user_name] _____[points]______
-	 * 		Command 1.)
-	 * 		Command 2.)
-	 * 		Command 3.)
+	 * Will access the member users ticketCart() and remove the ticket and refund the money to the user [if you want to deal with a users wallet amount you can add that into the jsons/parsing yourself. Im ignoring that]
 	 */
-	public void displayRewards() {
-		
-	}
-	
-	
 	public void requestRefund() {
 		
 	}
-	
+	/**
+	 * Removes the data from the users list.
+	 */
 	public void deleteAccount() {
 		
 	}
 	/**
-	 * still need to work with how this is dealt.
+	 * User json has a discountType value to it. Allow the user to input an id (discountType maybe based on int length or something) then update
+	 * the value in the array list to save to the json. Then later you can compare if they user has a certain discount value.
 	 */
 	public void useDiscount() {
 		
 	}
 	/**
-	 * will probably take in the shopping cart and add the tickets to your account
-	 * again this may need further modifications to our users.json or maybe can be done simpler
-	 * 
+	 * Get the users current shopping cart and price the tickets inside. If the user is a guest then they will only be able to have the tickets printed out
+	 * instead of adding to their ticket list. If they are a member then add the shopping cart values to the ticket cart for ability to refund/print/view
 	 */
 	public void checkout() {
 		
 	}
 	/**
-	 * printing out the tickets in our list of current owned tickets to a .txt file
-	 * 
+	 * Print out the ticket info to a fancy txt file. Include Movie Name/Theater Name/Show Times/Seat Location if reservered
 	 */
 	public void printTicket() {
 		
