@@ -1,6 +1,7 @@
 package Commands;
 
 import main.TheaterInterface;
+import main.User;
 /**
  * 
  * @author Devin Adams
@@ -9,6 +10,7 @@ import main.TheaterInterface;
  */
 public class TheaterCommands {
 	TheaterInterface ti = new TheaterInterface();
+	User us = new User(null, null, null, 0, 0, 0, 0, null, null);
 	
 	public void displayMovies() {	
 		ti.displayMovies();
@@ -32,5 +34,17 @@ public class TheaterCommands {
 	
 	public void displayPlay() {
 		ti.displayPlays();
+	}
+	
+	public void displayCurrentUser() {
+		us.displayCurrentUserInfo();
+	}
+	
+	public void updateUsername() {
+		us.updateUserName();
+	}
+	
+	public void testFunction() {
+		us.testArrayListSizeAndRemoving();
 	}
 }

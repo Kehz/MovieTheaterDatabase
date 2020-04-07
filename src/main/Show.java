@@ -1,5 +1,7 @@
 package main;
-import java.util.Arrays;
+
+import java.util.ArrayList;
+
 /*
  * Will modify this at some point to contain properly hold values from movie/play
  */
@@ -10,12 +12,12 @@ public class Show {
 	private String genre;
 	private String director;
 	private int rating;
-	private String reviews;
-	private String showTimes;
+	private ArrayList<String> reviews;
+	private ArrayList<String> showTimes;
+	private ArrayList<String> inTheaters;
 	private Boolean[][] seating;
-	private double price;
 
-	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, Boolean[][] seating, double price) {
+	public Show(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters, Boolean[][] seating) {
 		this.id = id;
 		this.title = title;
 		this.length = length;
@@ -24,8 +26,8 @@ public class Show {
 		this.rating = rating;
 		this.reviews = reviews;
 		this.showTimes = showTimes;
-		this.seating= seating;
-		this.price=price;
+		this.inTheaters = inTheaters;
+		this.seating=seating;
 	}
 
 	public String getTitle() {
@@ -58,18 +60,18 @@ public class Show {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public String getReviews() {
+	public ArrayList<String> getReviews() {
 		return reviews;
 	}
-	public void setReviews(String reviews) {
+	public void setReviews(ArrayList<String> reviews) {
 		this.reviews = reviews;
 	}
 
-	public String getShowTimes() {
+	public ArrayList<String> getShowTimes() {
 		return showTimes;
 	}
 
-	public void setShowTimes(String showTimes) {
+	public void setShowTimes(ArrayList<String> showTimes) {
 		this.showTimes = showTimes;
 	}
 
@@ -81,18 +83,19 @@ public class Show {
 		this.id = id;
 	}
 
-	public Boolean[][] getSeating() {
+	public ArrayList<String> getInTheaters() {
+		return inTheaters;
+	}
+
+	public void setInTheaters(ArrayList<String> inTheaters) {
+		this.inTheaters = inTheaters;
+	}
+	public Boolean[][] getSeating(){
 		return seating;
 	}
+
 	public void setSeating(Boolean[][]seating) {
 		this.seating=seating;
 	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price=price;
-	}
 }
+    

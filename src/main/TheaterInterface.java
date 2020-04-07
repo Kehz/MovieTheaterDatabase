@@ -29,14 +29,15 @@ public class TheaterInterface {
 			String title = getField("Title");
 			String genre = getField("Genre");
 			String director = getField("Director");
-			String reviews = getField("Reviews");
-			String showTimes = getField("Show Times");
 			String ageRating = getField("Age Rating [G,PG,PG-13,R]");
+			ArrayList<String> reviews = getArrayField("Reviews");
+			ArrayList<String> showTimes = getArrayField("Show Times");
+			ArrayList<String> inTheaters = getArrayField("Theaters Shown in");
 			int rating = getIntField("Rating [5/5]");
 			int length = getIntField("Length [Minutes]");
 			int releaseYear = getIntField("Release Year");
 			
-			dataLists.addMovie(id,title, length, genre, director, rating, reviews, showTimes, ageRating, releaseYear);
+			dataLists.addMovie(id,title, length, genre, director, rating, reviews, showTimes, inTheaters, ageRating, releaseYear);
 		}
 	}
 	
@@ -50,14 +51,15 @@ public class TheaterInterface {
 			String title = getField("Title");
 			String genre = getField("Genre");
 			String director = getField("Director");
-			String reviews = getField("Reviews");
-			String showTimes = getField("Show Times");
+			ArrayList<String> reviews = getArrayField("Reviews");
+			ArrayList<String> showTimes = getArrayField("Show Times");
+			ArrayList<String> inTheaters = getArrayField("Theaters Shown in");
 			int rating = getIntField("Rating [5/5]");
 			int length = getIntField("Length [Minutes]");
 			int amountActors = getIntField("Actor Amount");
 			int timesPerformed = getIntField("Times Performed");
 			
-			dataLists.addPlay(id,title, length, genre, director, rating, reviews, showTimes, amountActors, timesPerformed);
+			dataLists.addPlay(id,title, length, genre, director, rating, reviews, showTimes, inTheaters, amountActors, timesPerformed);
 		}
 	}
 	/**
@@ -65,14 +67,16 @@ public class TheaterInterface {
 	 */
 	public void addTheater() {
 		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterList = dataLists.getTheaters();
 		System.out.println("****** Displaying Current Theaters In The Database ******");
 		displayTheaters();
-		
 		while(addTheaters()) {
+			int id = theaterList.size()+1;
 			String title = getField("Title");;
-			String reviews = getField("Reviews");
+			ArrayList<String> reviews = getArrayField("Reviews");
 			int rating = getIntField("Rating");
-			dataLists.addTheater(title, rating, reviews);
+			int employeeID = getIntField("Employee ID");
+			dataLists.addTheater(id,title, rating, reviews, employeeID);
 		}
 	}
 	/**
@@ -80,17 +84,53 @@ public class TheaterInterface {
 	 */
 	public void addUser() {
 		DataLists dataLists = DataLists.getInstance();
-		System.out.println("Create an account by entering following credentials");
-		boolean test = true;
-		while(test) {
-			String username = getField("Enter Username: ");
-			String password = getField("Enter Password: ");
-			String email = getField("Enter email: ");
-			int age = getIntField("Enter age: ");
-			int points = 0;
-			dataLists.addUser(username, password, email, age, points);
-			test = false;
+		System.out.println("Are you creating an employee account? y/n");
+		String input = scanner.nextLine();
+		int employeeID = 0;
+		int discountType = 0;
+		if(input.toLowerCase().trim().equals("y")) {
+			System.out.println("Enter your employee ID: ");
+			employeeID = scanner.nextInt();
+			scanner.nextLine();
+			if (isValidEmployee(employeeID)) {
+				discountType = 1;
+				System.out.println("You're a valid employee for a theater!");
+			} else {
+				employeeID = 0;
+				discountType = 0;
+				System.out.println("Invalid employee ID. Contact Admin to add your Theater id or input a valid id");
+				return;
+			}
+		} else if (input.toLowerCase().trim().equals("n")) {
+			employeeID = 0;
+			discountType = 0;
 		}
+		System.out.println("Create an account by entering following credentials");
+		ArrayList<String> shoppingCart = new ArrayList<String>();
+		ArrayList<String> ticketCart = new ArrayList<String>();
+		ticketCart.add("Empty Cart");
+		shoppingCart.add("Empty Cart");
+		String username = getField("Enter Username: ");
+		String password = getField("Enter Password: ");
+		String email = getField("Enter email: ");
+		int age = getIntField("Enter age: ");
+		int points = 0;
+		dataLists.addUser(username, password, email, age, points,employeeID,discountType,shoppingCart,ticketCart);
+	}
+	
+	private ArrayList<String> getArrayField(String prompt) {
+		System.out.println(prompt + "(type 'end' to stop adding elements): ");
+		ArrayList<String> input = new ArrayList<String>();
+		boolean loop = true;
+		while(loop) {
+			String str = scanner.nextLine();
+			if(str.contentEquals("end")) {
+				loop = false;
+			} else {
+				input.add(str);
+			}
+		}
+		return input;
 	}
 	
 	private String getField(String prompt) {
@@ -128,9 +168,7 @@ public class TheaterInterface {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<Movie> movieList = dataLists.getMovie();
 		for(Movie movie : movieList) {
-			System.out.println("\n Id " +movie.getId() + "\n Title: " + movie.getTitle() + "\n Movie Length: " + movie.getLength() + "\n Release Year: " + movie.getReleaseYear() + "\n Genre: " 
-								+ movie.getGenre() +"\n Director: " + movie.getDirector() + "\n Age Rating: " +movie.getAgeRating()+ "\n Show Times: " +movie.getShowTimes()+ "\n Rating: "  
-								+ movie.getRating() + "\n Reviews: " +movie.getReviews() + "\n ======================");
+			System.out.println(movie.toString());
 		}
 	}
 	
@@ -138,9 +176,7 @@ public class TheaterInterface {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<Play> playList = dataLists.getPlays();
 		for(Play play : playList) {
-			System.out.println("\n Id: " +play.getId() + "\n Title: " + play.getTitle() + "\n Movie Length: " + play.getLength() + "\n Amount Actors: " + play.getAmountActors() + "\n Genre: " 
-								+ play.getGenre() +"\n Director: " + play.getDirector() + "\n Times Performed: " +play.getTimesPerformed()+ "\n Show Times: " +play.getShowTimes()+ "\n Rating: "  
-								+ play.getRating() + "\n Reviews: " +play.getReviews() + "\n ======================");
+			System.out.println(play.toString());
 		}
 	}
 	/**
@@ -150,9 +186,7 @@ public class TheaterInterface {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<Theaters> theaterLists = dataLists.getTheaters();
 		for(Theaters theaters : theaterLists) {
-			System.out.println("\n Name: " +theaters.getTitle() + "\n Ratings: " + theaters.getRatings() 
-								+ "\n Reviews: " +theaters.getReviews() 
-								+ "\n =======================");
+			System.out.println(theaters.toString());
 		}
 	}
 	/**
@@ -160,6 +194,7 @@ public class TheaterInterface {
 	 * @return True if username/password match | False if username/password do not match
 	 */
 	public boolean login() {
+		User us = new User(null, null, null, 0, 0, 0, 0, null, null);
 		Scanner scanner = new Scanner(System.in);
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userLists = dataLists.getUsers();
@@ -174,6 +209,7 @@ public class TheaterInterface {
 		for(User users : userLists) {
 			if((users.getUsername() != null && users.getUsername().contains(username)) && (users.getPassword() != null && users.getPassword().contains(password))) {
 				System.out.println("Succesfully Logged In!");
+				us.updateCurrentUser(users.getUsername(), users.getPassword(), users.getEmail(), users.getPoints(), users.getAge());
 				found = true;
 				if (found == true) {
 					break;
@@ -185,7 +221,16 @@ public class TheaterInterface {
 		if (found == false) {
 			System.out.println("Login info incorrect");
 		}
-		scanner.close();
 		return found;
+	}
+	private boolean isValidEmployee(int employeeID) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theaterList = dataLists.getTheaters();
+		for(Theaters theater: theaterList) {
+			if (theater.getEmployeeID() == employeeID) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
