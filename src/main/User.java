@@ -279,16 +279,25 @@ public class User {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userList = dataLists.getUsers();
 		for(User users : userList) {
+			double total = 0.0;
 			for(int i = 0; i < users.getTicketCart().size(); i++) {
 				users.getTicketCart().remove(i); //could just display message that their card will be refunded instead of dealing with a wallet
+				total += 7.50;
 			}
+			System.out.println("Your card will be refunded $" + total + " for the tickets.");
 		}
 	}
 	/**
 	 * Removes the data from the users list.
 	 */
 	public void deleteAccount() {
-		
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for(User users : userList) {
+			if(users.getUsername() == currUserName) {
+				userList.remove(users);
+			}
+		}
 	}
 	/**
 	 * User json has a discountType value to it. Allow the user to input an id (discountType maybe based on int length or something) then update
