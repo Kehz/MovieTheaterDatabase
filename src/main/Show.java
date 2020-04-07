@@ -14,7 +14,7 @@ public class Show {
 	private String showTimes;
 	private Boolean[][] seating;
 	private double price;
-	
+
 	public Show(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, Boolean[][] seating, double price) {
 		this.id = id;
 		this.title = title;
@@ -27,7 +27,7 @@ public class Show {
 		this.seating= seating;
 		this.price=price;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -80,18 +80,18 @@ public class Show {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public Boolean[][] getSeating() {
 		return seating;
 	}
 	public void setSeating(Boolean[][]seating) {
 		this.seating=seating;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}
-	
+
 	public void setPrice(double price) {
 		this.price=price;
 	}

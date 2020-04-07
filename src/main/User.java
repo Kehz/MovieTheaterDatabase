@@ -14,7 +14,7 @@ public class User {
 	private int discountID;
 	private int points;
 	/**
-	 * 
+	 *
 	 * @param username - Users username
 	 * @param password - Users password
 	 * @param email - Users email
@@ -28,14 +28,14 @@ public class User {
 		this.age = age;
 		this.points = points;
 	}
-	
-	
-	
+
+
+
 
 	/*
 	 * Getters and Setters for our User object
 	 */
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -83,14 +83,14 @@ public class User {
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	
+
 	public void orderTicket() {
 		Theaters theaterPick=viewTheaters();//select theater
 		Show showPick=viewShows(theaterPick);//select show from ones playing at the theater
 		reserveSeating(showPick);//reserve seat at that show
 		checkout(showPick);//pay for the ticket
 	}
-	
+
 	public Theaters viewTheaters() {
 		Theaters chosen= new Theaters(email, age, email);
 		DataLists dataLists = DataLists.getInstance(); //Pulls instance of the data list class
@@ -112,16 +112,16 @@ public class User {
 				//redo selection until a valid one is chosen
 			}
 		}
-		
+
 		//return selection
 		return chosen;
 	}
-	
+
 	public Show viewShows(Theaters temp) {
 		Show chosen=new Show(age, email, age, email, email, age, email, email, null, age);
 		TheaterInterface thing= new TheaterInterface();
 		DataLists dataLists = DataLists.getInstance(); //Pulls instance of the data list class
-		
+
 		System.out.println("Would you like to view our list of movies or plays? Enter '1' for movies and '2' for plays");
 		int choose;
 		choose=in.nextInt();
@@ -134,7 +134,7 @@ public class User {
 			String selection;
 			selection=in.nextLine();
 			//check to see if there is a match in the arraylists, then set that to selection
-			
+
 			for(Movie movies : movieList) {
 				if (movies.getTitle() == selection) {
 					chosen=movies;
@@ -144,7 +144,7 @@ public class User {
 					//redo selection until a valid one is chosen
 				}
 			}
-			
+
 		}
 		else if(choose==2) {
 			ArrayList<Play> playList = dataLists.getPlays(); //Grabs the current list of users/movies/plays
@@ -167,9 +167,9 @@ public class User {
 		}
 		return chosen;
 	}
-	
+
 	public void reserveSeating(Show temp) {
-		
+
 		Boolean[][] seats=temp.getSeating();
 		System.out.println("What row would you like to select?");
 		//type in seat selection
@@ -182,7 +182,7 @@ public class User {
 		seats[row][column]=true;
 		temp.setSeating(seats);//update show seating
 	}
-	
+
 	public void checkout(Show temp) {
 		double cost= temp.getPrice();
 		System.out.println("A ticket to this show will cost " + cost + " dollars");
