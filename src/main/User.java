@@ -1,5 +1,8 @@
 package main;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -323,13 +326,62 @@ public class User {
 	 * instead of adding to their ticket list. If they are a member then add the shopping cart values to the ticket cart for ability to refund/print/view
 	 */
 	public void checkout() {
-		
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		Scanner scanner = new Scanner(System.in);
+		double price = 0.0;
+		for(User users : userList) {
+			if(users.getUsername() == currUserName) {
+				for(int i = 0; i < users.getShoppingCart().size(); i++) {
+					price += 7.50;
+				}
+				System.out.println("The total price of the tickets in your cart is $" + price);
+				if(users.getUserType() == 0) {
+					System.out.println("Would you like to have a printable copy of your tickets? (y/n)");
+					String response = scanner.nextLine();
+					if(response.equalsIgnoreCase("y"))
+						users.printTicket();
+				}
+				else if(users.getUserType() == 1 || users.getUserType() == 2) {
+					System.out.println("Options");
+					System.out.println("- Press 1 to apply for a refund on your tickets.");
+					System.out.println("- Press 2 to have a printable copy of your tickets.");
+					System.out.println("- Press 3 to view your tickets.");
+					int userResponse = scanner.nextInt();
+					
+					if(userResponse == 1) {
+						users.requestRefund();
+					}
+					else if(userResponse == 2) {
+						users.printTicket();
+					}
+					else if(userResponse == 3) {
+						users.getShoppingCart();
+					}
+				}
+			}
+		}
 	}
 	/**
 	 * Print out the ticket info to a fancy txt file. Include Movie Name/Theater Name/Show Times/Seat Location if reservered
 	 */
 	public void printTicket() {
-		
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie();
+		try {
+			FileWriter writer = new FileWriter("Print.txt", true);
+			BufferedWriter bWriter = new BufferedWriter(writer);
+			
+			for(Movie movie : movieList) {
+				bWriter.write("Movie: " + movie.getTitle());
+				bWriter.newLine();
+				bWriter.write("Show time: " + movie.getShowTimes());
+				bWriter.newLine();
+				bWriter.write("Theater: " + movie.getInTheaters());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
