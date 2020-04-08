@@ -280,11 +280,13 @@ public class User {
 		ArrayList<User> userList = dataLists.getUsers();
 		for(User users : userList) {
 			double total = 0.0;
-			for(int i = 0; i < users.getTicketCart().size(); i++) {
-				users.getTicketCart().remove(i); //could just display message that their card will be refunded instead of dealing with a wallet
-				total += 7.50;
+			if(users.getUsername() == currUserName) {
+				for(int i = 0; i < users.getTicketCart().size(); i++) {
+					users.getTicketCart().remove(i); //could just display message that their card will be refunded instead of dealing with a wallet
+					total += 7.50;
+				}
 			}
-			System.out.println("Your card will be refunded $" + total + " for the tickets.");
+			System.out.println("Your card will be refunded $" + total + " for the refunded tickets.");
 		}
 	}
 	/**
@@ -304,7 +306,17 @@ public class User {
 	 * the value in the array list to save to the json. Then later you can compare if they user has a certain discount value.
 	 */
 	public void useDiscount() {
-		
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		Scanner scanner = new Scanner(System.in);
+		for(User users : userList) {
+			if(users.getUsername() == currUserName) {
+				System.out.println("Enter your discount id.");
+				int discId = scanner.nextInt();
+				users.setDiscountType(discId);
+				DataWriter.saveUsers();
+			}
+		}
 	}
 	/**
 	 * Get the users current shopping cart and price the tickets inside. If the user is a guest then they will only be able to have the tickets printed out
