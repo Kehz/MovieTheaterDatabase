@@ -4,14 +4,14 @@ package Commands;
  * @author Devin Adams
  * Easy test command for testing functions quickly
  */
-public class TestCommand implements Command{
+public class WatchCommand implements Command{
 	TheaterCommands theater;
-	public TestCommand(TheaterCommands theater) {
+	public WatchCommand(TheaterCommands theater) {
 		this.theater = theater;
 	}
 	@Override
 	public void execute() {
-		theater.testFunction();
+		theater.runSim();
 	}
 
 }

@@ -10,15 +10,22 @@ public class InputHandler {
 	private HashMap<String, Command> commands = new HashMap<>();
 	
 	public InputHandler(TheaterCommands theater) { 
-		commands.put("show movies", new DisplayMoviesCommand(theater));
+		commands.put("display movies", new DisplayMoviesCommand(theater));
 		commands.put("enter movie", new EnterMovieCommand(theater));
 		commands.put("enter theater", new EnterTheatersCommand(theater));
 		commands.put("show theaters", new DisplayTheatersCommand(theater));
 		commands.put("enter play", new EnterPlayCommand(theater));
-		commands.put("show plays", new DisplayPlaysCommand(theater));
-		commands.put("show user", new DisplayCurrentUser(theater));
-		commands.put("update username", new UpdateUsernameCommand(theater));
-		commands.put("test", new TestCommand(theater));
+		commands.put("display plays", new DisplayPlaysCommand(theater));
+		commands.put("checkout", new CheckoutCommand(theater));
+		commands.put("order ticket", new OrderTicketCommand(theater));
+		commands.put("watch", new WatchCommand(theater));
+		commands.put("search shows", new SearchCommand(theater));
+		commands.put("print tickets", new PrintTicketCommand(theater));
+		commands.put("refund", new RefundCommand(theater));
+		commands.put("view shopping cart", new ShowShoppingCartCommand(theater));
+		commands.put("view ticket cart", new ShowTicketCartCommand(theater));
+		commands.put("change account details", new UpdateAccountInfo(theater));
+		commands.put("add show to theater", new AddTheaterShowCommand(theater));
 	}
 	
 	public void inputEntered(String data) {
