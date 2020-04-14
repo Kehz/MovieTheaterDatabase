@@ -28,7 +28,7 @@ public class TheaterDriver {
 			inHandler.inputEntered(command);
 		}
 	}
-	
+
 	private String getInputLine(String prompt, Scanner in) {
 		System.out.print(prompt + ": ");
 		return in.nextLine().toLowerCase().trim();
@@ -54,32 +54,31 @@ public class TheaterDriver {
 			switch(userCommand) {
 			case(0):
 				ti.addUser();
-				break;
+			break;
 			case(1):
 				System.out.println("Proceeding as a Guest User\nSome features will be inaccessible");
-				runTheaterDriver();
-				break;
+			runTheaterDriver();
+			break;
 			case(2):
 				if(ti.login() == true) {
 					runTheaterDriver();
 				} else {
 					break;	
 				}
-		}
-		System.out.println("Exiting Program");
+			}
 		}
 	}
 
 	private int getUserCommand(int numCommands) {
 		System.out.print("What would you like to do?: ");
 		Scanner scanner = new Scanner(System.in);
-		
+
 		String input = scanner.nextLine();
-		
+
 		int command = Integer.parseInt(input) - 1;
 
 		if(command >= 0 && command <= numCommands -1) return command; 
-		
+
 		return -1;
 	}
 

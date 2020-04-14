@@ -36,15 +36,42 @@ public class TheaterCommands {
 		ti.displayPlays();
 	}
 	
-	public void displayCurrentUser() {
-		us.displayCurrentUserInfo();
+	public void checkout() {
+		us.checkout();
 	}
 	
-	public void updateUsername() {
-		us.updateUserName();
+	public void orderTicket() {
+		us.orderTicket();
 	}
 	
-	public void testFunction() {
-		us.testArrayListSizeAndRemoving();
+	public void runSim() {
+		us.watchMovie();
+	}
+	
+	public void search() {
+		us.searchShows();
+	}
+	
+	public void printTickets() {
+		us.printUserTicketInfo();
+	}
+	public void refund() {
+		us.requestRefund();
+	}
+	
+	public void printShoppingCart() {
+		us.printShoppingCart();
+	}
+	
+	public void printTicketCart() {
+		us.showTickets();
+	}
+	
+	public void changeAccountDetails() {
+		us.changeAccountDetails();
+	}
+	
+	public void workerAddTheaterShow() {
+		us.workerAddTheaterShow();
 	}
 }

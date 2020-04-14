@@ -25,7 +25,7 @@ public class DataLoader extends DataConstants{
 	
 	/**
 	 * This function loads data from the json file and adds it to an arraylist
-	 * @return returns an array list of shows parsed from the shows.json
+	 * @return returns an array list of shows parsed from the movies.json
 	 */
     public static ArrayList<Movie> loadMovies() {
     	ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -52,7 +52,6 @@ public class DataLoader extends DataConstants{
     			int length = (int)longLength;
     			int releaseYear = (int)longReleaseYear;
     			int rating = (int)longRating;
-    			
     			ArrayList<String> showTimes = addToArrayList(showTimeArray);
     			ArrayList<String> reviews = addToArrayList(reviewArray);
     			ArrayList<String> inTheaters = addToArrayList(inTheaterArray);
@@ -64,7 +63,10 @@ public class DataLoader extends DataConstants{
     	}
     	return null;
     }	
-    
+    /**
+	 * This function loads data from the json file and adds it to an arraylist
+	 * @return returns an array list of shows parsed from the plays.json
+	 */
     public static ArrayList<Play> loadPlays() {
     	ArrayList<Play> plays = new ArrayList<Play>();
     	

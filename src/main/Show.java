@@ -2,19 +2,21 @@ package main;
 
 import java.util.ArrayList;
 
-/*
- * Will modify this at some point to contain properly hold values from movie/play
+/**
+ * 
+ * @author Devin Adams
+ * This stores our general show information. Things that both plays/movies share
  */
 public class Show {
-	private int id;
-	private String title;
-	private int length;
-	private String genre;
-	private String director;
-	private int rating;
-	private ArrayList<String> reviews;
-	private ArrayList<String> showTimes;
-	private ArrayList<String> inTheaters;
+	protected int id;
+	protected String title;
+	protected int length;
+	protected String genre;
+	protected String director;
+	protected int rating;
+	protected ArrayList<String> reviews;
+	protected ArrayList<String> showTimes;
+	protected ArrayList<String> inTheaters;
 	
 	public Show(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters) {
 		this.id = id;

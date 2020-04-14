@@ -4,15 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import JSONParsing.DataLists;
 import JSONParsing.DataWriter;
 
 public class User {
-	/**
-	 * These are the current logged in users info
-	 */
 	public static String currUserName;
 	public static String currPassword;
 	public static String currEmail;
@@ -20,32 +18,31 @@ public class User {
 	public static int currAge;
 	public static String workingAt;
 	public static int currEmployeeID;
-	/**
-	 * These are some arrays for printing menus
-	 */
-	private String[] guestMenuOptions = {"Order Tickets", "Display Movies", "Display Shows" , "Search Shows", "Search Theaters", "View Shopping Cart", "Checkout", "Print Tickets", "Logout"};
-	private String[] memberMenuOptions = {"Order Tickets", "Display Movies", "Display Shows" , "Search Shows",
-										"Search Theaters", "Checkout", "Refund", "Print Tickets","View Shopping Cart", "View Ticket List", "Change Account Details", "Logout"};
-	private String[] employeeMenuOptions = {"Add Show To Theater", "Update Show Times", "Display Shows", "Logout"};
-	/**
-	 * Variables for our User object. THESE ARE NOT THE CURRENT USER
-	 */
-	private String username;
-	private String password;
-	private String email;
-	private int age;
-	private int points;
-	private int employeeID;
-	private int discountType;
-	private ArrayList<String> shoppingCart;
-	private ArrayList<String> ticketCart;
+	private Scanner scanner;
+	protected String[] guestMenuOptions = {"Order Tickets", "Display Movies", "Display Plays" , "Search Shows", "Logout"};
+	protected String[] memberMenuOptions = {"Order Tickets", "Display Movies", "Display Plays" , "Search Shows",
+			"Checkout", "Refund", "Print Tickets","View Shopping Cart", "View Ticket List", "Change Account Details", "Logout"};
+	protected String[] employeeMenuOptions = {"Add Show To Theater", "Update Show Times", "Enter Movie", "Enter Play","Display Movies","Display Plays", "Logout"};
+	protected String username;
+	protected String password;
+	protected String email;
+	protected int age;
+	protected int points;
+	protected int employeeID;
+	protected int discountType;
+	protected ArrayList<String> shoppingCart;
+	protected ArrayList<String> ticketCart;
 	/**
 	 * 
 	 * @param username - Users username
 	 * @param password - Users password
 	 * @param email - Users email
 	 * @param age - Users age
-	 * @param points - Users points
+	 * @param points - Users point
+	 * @param employee id - id associated with their workplace
+	 * @param discountType - associated discount type
+	 * @param shoppingCart - the list of ticket not yet purchased
+	 * @parem ticketCart - the list of tickets that have been purchased
 	 */
 	public User(String username, String password, String email, int age, int points, int employeeID, int discountType, ArrayList<String> shoppingCart, ArrayList<String> ticketCart) {
 		this.username = username;
@@ -57,8 +54,16 @@ public class User {
 		this.discountType = discountType;
 		this.shoppingCart = shoppingCart;
 		this.ticketCart = ticketCart;
+		scanner = new Scanner(System.in);
 	}
-	
+	/**
+	 * 
+	 * @param currUserName - instance of logged in username
+	 * @param currPassword - instance of logged in password
+	 * @param currEmail - instance of logged in email
+	 * @param currPoints - instance of logged in points
+	 * @param currAge - instance of logged in age
+	 */
 	public void updateCurrentUser(String currUserName,String currPassword, String currEmail, int currPoints, int currAge) {
 		User.currUserName = currUserName;
 		User.currPassword = currPassword;
@@ -66,7 +71,19 @@ public class User {
 		User.currPoints = currPoints;
 		User.currAge = currAge;
 	}
-	
+	/**
+	 * Updating our current points to be displayed
+	 * @param points - points
+	 */
+	public void updatePoints(int points) {
+		currPoints = points;
+	}
+	/**
+	 * Printing menu per usertype
+	 * 0 = guest
+	 * 1 = member
+	 * 2 = theater employee
+	 */
 	public void userMainMenu() {
 		System.out.println("\nMovie Theater Application ");
 		int currentUserType = getUserType();
@@ -78,7 +95,13 @@ public class User {
 			printEmployeeMenu();
 		}
 	}
-	
+	/**
+	 * Gets our current users account type
+	 * @return integer based on userType
+	 * 0 = guest
+	 * 1 = member
+	 * 2 = theater employee
+	 */
 	private int getUserType() {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userList = dataLists.getUsers();
@@ -99,7 +122,9 @@ public class User {
 		System.out.println("Error! Unable to get the user type. Proceeding as guest. (How did this happen?)");
 		return 0;
 	}
-	
+	/**
+	 * updates the title of where our current employee is working
+	 */
 	private void updateEmployeeWorking() {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<Theaters> theaterList = dataLists.getTheaters();
@@ -110,7 +135,9 @@ public class User {
 			}
 		}
 	}
-	
+	/**
+	 * printing the guest menu
+	 */
 	private void printGuestMenu() {
 		System.out.println("\nMember: Guest");
 		System.out.println("=========================");
@@ -119,7 +146,9 @@ public class User {
 		}
 		System.out.println("=========================");
 	}
-	
+	/**
+	 * printing the member menu
+	 */
 	private void printMemberMenu() {
 		System.out.println("\nMember: " + currUserName + " Points: " + currPoints);
 		System.out.println("=========================");
@@ -128,7 +157,9 @@ public class User {
 		}
 		System.out.println("=========================");
 	}
-	
+	/**
+	 * printing the employee menu
+	 */
 	private void printEmployeeMenu() {
 		System.out.println("\nMember: " + currUserName + " Theater: " + workingAt);
 		System.out.println("=========================");
@@ -137,146 +168,454 @@ public class User {
 		}
 		System.out.println("=========================");
 	}
-	
-	public void displayCurrentUserInfo() {
-		System.out.println("\n UserName: " +currUserName + "\n Password: " + currPassword + "\n Email: " + currEmail + "\n Point total: " + currPoints + "\n Age: " + currAge);
+	/**
+	 * prompts for changing user details 
+	 */
+	public void changeAccountDetails() {
+		String[] options = {"Change Username", "Change password", "Change email", "Delete Account"};
+		for (int i = 0; i < options.length; i++) {
+			System.out.println(i+1 + ". " + options[i]);
+		}
+		System.out.println("Enter Option Number");
+		int input = scanner.nextInt();
+
+		if (input == 1) {
+			updateUserName();
+			return;
+		} else if (input == 2) {
+			updatePassword();
+			return;
+		} else if (input == 3) {
+			updateEmail();
+			return;
+		} else if (input == 4){
+			deleteAccount();
+		} else {
+			System.out.println("Invalid Command");
+		}
+
 	}
 	/**
-	 * Updates the username of the current logged in user and good example of how
-	 * to change data in our jsons
+	 * Updates the users username
 	 */
-	public void updateUserName() {
-		Scanner scanner = new Scanner(System.in);
-		DataLists dataLists = DataLists.getInstance(); //Pulls instance of the data list class
-		ArrayList<User> userList = dataLists.getUsers(); //Grabs the current list of users/movies/plays
+	private void updateUserName() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers(); 
 		System.out.println("******** Updating Username ********");
 		for(User users : userList) {
 			if (users.getUsername() == currUserName) { 
 				System.out.println("Enter Username: ");
 				users.setUsername(scanner.nextLine());
-				DataWriter.saveUsers(); // need to call this to save to our json savePlays() / saveMovies() etc...
-			}
-		}
-		
-		System.out.println("You must log back in with your new info to update the changes. \n Type 'logout' to logout");
-	}
-	/**
-	 * Allow the user to pick a movie and a theater playing that movie. As well as it's showtime
-	 * Only need the info from Movie/Play ArrayList now. ie.) movies.getTitle() / movies.getShowTimes() / movies.inTheaters()
-	 * Append them to variables and you can add it to the users shopping cart users.getShoppingCart() etc....
-	 * 
-	 */
-	public void orderTicket() {
-		
-	}
-	
-	/**
-	 * Example function for adding a review to a movie
-	 */
-	public void testFunction() {
-		System.out.println("Command Fired"); //just testing to see if they command is executed
-		DataLists dataLists = DataLists.getInstance(); //Pulls instance of the data list class. This is important because it gives us access to load commands
-		ArrayList<Movie> movieList = dataLists.getMovie(); //grabbing the Movie arraylist from json.
-		String searchMovie = "Frozen 2"; //dummy variable for testing
-		for(Movie movie : movieList) { //for each loop going through the movie arraylist
-			if (movie.getTitle().contentEquals(searchMovie)) { //checking if the movie its searching for exists
-				System.out.println("found movie"); //test print out to see if its finding a movie
-				ArrayList<String> addReview = movie.getReviews(); //creating an arraylist and setting it equal to the current reviews of the movie ***reviews is an array inside the json so this is why its like that****
-				addReview.add("this is testing adding a new review to frozen2"); //adding to the addReview list. Can be any string this is just a test example. Since addReview is a string arraylist it takes in strings
-				movie.setReviews(addReview); //calls the mutator for the movie revies and sets it equal to the new arraylist addReview. Remember addReview is equal to the old movie.getReview() so it adds to it this way
-				DataWriter.saveMovies(); // Please call this whenever you deal with adding/removing from an ArrayList<Movie/Play/Theater/user> or else it wont save to that current one and the changes wont be reflected in the jsons
-			}
-		}
-	}
-	/**
-	 * Example function for adding a theater to a shows playing at array = movies/plays.getInTheater()
-	 */
-	public void testAddTheaterToShowFunction() {
-		DataLists dataLists = DataLists.getInstance(); //we know what this does now
-		ArrayList<Movie> movieList = dataLists.getMovie(); //grabs movie arraylist from json
-		ArrayList<Play> playList = dataLists.getPlays(); //grabs play arraylist from json - dont really use this one in this case but here for example
-		ArrayList<Theaters> theaterList = dataLists.getTheaters(); //grabs theater from arraylist
-		String theaterToShow = "Spark Theater"; //hard coded variable for testing which theater we want to add to the shows [now playing]
-		String showToAddTheater = "The Lion King"; //hard coded variable for testing which movie we want to append the theater to
-		boolean valid = false;
-		for(Theaters theater : theaterList) {
-			if (theater.getTitle().contentEquals(theaterToShow)) { //checking to make sure the theater is a valid theater
-				System.out.println("Theater Valid!"); //if theater is valid(in our theater array list) print this
-				valid = true; //setting valid to true;
-				break; //breaking out of the loop so we dont continue to search for no reason
-			} 
-		}
-		if(!valid) { //if valid is still false (we never found a theater) print out invalid theater and return(exit funciton)
-			System.out.println("Invalid Theater");
-			return;
-		}
-		for(Movie movie : movieList) {
-			if (movie.getTitle().contentEquals(showToAddTheater)) { //checking if its a valid movie (in our movie arraylist)
-				ArrayList<String> addTheater = movie.getInTheaters(); //creating a new array list equal to the current array in the movie json object "inTheaters"
-				if(!addTheater.contains(theaterToShow)) { //if the theater is not already in that "inTheaters" array in the json then continue
-					System.out.println("Adding " +showToAddTheater+ " to play at " +theaterToShow); //printing out which movie is getting added
-					addTheater.add(theaterToShow); //adding the theater to the "inTheaters" copy array list we created
-					movie.setInTheaters(addTheater); //setting the newly created array list to the current selected movies "inTheaters" array
-					DataWriter.saveMovies();
-				} else {
-					System.out.println("That theater is already playing that movie"); //if the theater is already playing that movie then print thsi
-				}
-			}
-		}
-		
-	}
-	/**
-	 * Example function for adding tickets to the shopping cart and then adding that to the member users owned ticket list/cart
-	 */
-	public void testArrayListSizeAndRemoving() {
-		DataLists dataLists = DataLists.getInstance();
-		ArrayList<User> userList = dataLists.getUsers();
-		for(User users: userList) {
-			if((users.getShoppingCart().contains("Empty Cart")) && (users.getUsername() == currUserName)) { //Default value for users shopping and ticket cart is "Empty Cart". If cart is empty then proceed. currUserName is assigned when you login with an account if guest account then it will be null for now
-				System.out.println("Adding tickets to empty cart"); //printing test
-				ArrayList<String> addTickets = users.getShoppingCart(); //array list set equal to the current shopping cart
-				addTickets.remove(0); //removing the Empty Cart object since in this if statement it should always be at index 0
-				addTickets.add("Test Ticket1"); //adding one ticket
-				addTickets.add("Test ticket2"); //adding another
-				addTickets.add("Test ticket3"); //and another
-				users.setShoppingCart(addTickets); //setting the shopping cart equal to addTickets
-				DataWriter.saveUsers(); //saving to json
-			} else if((!users.getShoppingCart().contains("Empty Cart")) && (users.getUsername().contentEquals(currUserName))) { //if its not "Empty Cart" then it will instead just add the tickets instead of removing index(0)
-				System.out.println("Adding tickets");
-				ArrayList<String> addTickets = users.getShoppingCart();
-				addTickets.add("Test Ticket1");
-				addTickets.add("Test ticket2");
-				addTickets.add("Test ticket3");
-				users.setShoppingCart(addTickets);
 				DataWriter.saveUsers();
 			}
 		}
-		//at this point we have a shopping cart
-		for(User users : userList) {			
-			if(users.getUsername() == currUserName) {
-				double ticketCount = users.getShoppingCart().size(); //getting the size of the cart. aka how many tickets are inside
-				System.out.println(users.getShoppingCart()); // test print out
-				System.out.println("Your total is: $" + ticketCount*7.50); //multiplying by 7.50 to simlute the cost of each ticket
-				System.out.println("Your tickets will now be removed from cart and added to your ticket list"); //emptying the shopping cart. to simulate checking out and added tickets to your ticketCart 
-				ArrayList<String> removeTickets = users.getShoppingCart(); //removeTickets now equal to shopping cart
-				ArrayList<String> addTickets = new ArrayList<String>(); //new blank array list so we can safely copy / empty the removeTickets list without dealing with copy values(if we were to make it ArrayList<String> addTickets = users.getShoppingCart() then it would act as a pointer and thats annoying
-				if (users.getTicketCart().contains("Empty_Cart")) { //if your current ticket cart is empty the remove the empty cart index
-					users.getTicketCart().remove(0); //0 is the index of empty cart
+		System.out.println("You must log back in with your new info to update the changes. \n Type 'logout' to logout");
+	}
+	/**
+	 * updates password
+	 */
+	private void updatePassword() {
+		DataLists dataLists = DataLists.getInstance(); 
+		ArrayList<User> userList = dataLists.getUsers(); 
+		System.out.println("******** Updating Password ********");
+		for(User users : userList) {
+			if (users.getPassword() == currPassword) { 
+				System.out.println("Enter New Password: ");
+				users.setPassword(scanner.nextLine());
+				DataWriter.saveUsers();
+			}
+		}
+		System.out.println("You must log back in with your new info to update the changes. \n Type 'logout' to logout");
+	}
+	/**
+	 * updates email
+	 */
+	private void updateEmail() {
+		DataLists dataLists = DataLists.getInstance(); 
+		ArrayList<User> userList = dataLists.getUsers();
+		System.out.println("******** Updating Email ********");
+		for(User users : userList) {
+			if (users.getEmail() == currEmail) { 
+				System.out.println("Enter New Email: ");
+				users.setEmail(scanner.nextLine());
+				DataWriter.saveUsers();
+			}
+		}
+		System.out.println("You must log back in with your new info to update the changes. \n Type 'logout' to logout");
+	}
+	
+	/**
+	 * Allows the user to order a ticket. If its a guest user they will be prompted to print right away and wont be able to choose seating
+	 * If user then it will add it to the users shopping cart for later checkout
+	 */
+	public void orderTicket() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		System.out.println("Enter the name of the show you would like to order tickets of: ");
+		String showName = scanner.nextLine();
+		boolean validShow = printShow(showName);
+		if (validShow) {
+			return;
+		}
+		System.out.println("=======================================================");
+		printPlayingIn(showName);
+		System.out.println("=======================================================");
+		System.out.println("\nWhich theater would you like to view the show at: ");
+		String theaterName = scanner.nextLine();
+		boolean validTheater = printShowTimes(theaterName);
+		if (validTheater) {
+			System.out.println("Incorrect input!");
+		}
+		System.out.println("========================================================");
+		System.out.println("\nWhich time would you like to watch:\n");
+		printShowTimes(showName);
+		String showTimes = scanner.nextLine();
+		if (!isValidShowTime(showTimes)) {
+			System.out.println("Invalid showtime!");
+			return;
+		}
+		if (getUserType() == 0) {
+			System.out.println("\nHow many tickets would you like to order:");
+			double ticketAmount = scanner.nextInt();
+			System.out.println("Your total is $" + ticketAmount*7.50 + " and you have been billed accordingly");
+			System.out.println("Printing out your tickets now..........");
+			printGuestTicket(showName, theaterName, showTimes, ticketAmount);
+			return;
+		}
+		String seating = chooseSeating();
+		String ticket = showName + "," +theaterName+ "," +showTimes+","+seating;
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				if (users.getShoppingCart().contains("Empty Cart")) {
+					users.getShoppingCart().remove(0);
 				}
-				for(int i = 0; i < users.getShoppingCart().size(); i++) { //indivdually adding the tickets from removeTickets to addTickets to prevent issues with pointers
-					addTickets.add(removeTickets.get(i));
-				}
-				System.out.println(addTickets); //test print
-				users.setTicketCart(addTickets); //finalizing our setTicketCart value in the json
-				removeTickets.clear(); //deleting our shopping cart
-				removeTickets.add("Empty Cart"); //setting it to empty cart to prevent some null issues in the jsons i dont wanna deal with anymore
-				users.setShoppingCart(removeTickets); //finalizing our new empty shopping cart
-				DataWriter.saveUsers(); //saving to our json
+				System.out.println("Adding ticket to your shopping cart. \nInitiate the Checkout Command to checkout");
+				users.getShoppingCart().add(ticket);
+				System.out.println("Current Shopping Cart: ");
+				System.out.println(users.getShoppingCart());
+				DataWriter.saveUsers();
 			}
 		}
 	}
 	/**
-	 * Will access the member users ticketCart() and remove the ticket and refund the money to the user [if you want to deal with a users wallet amount you can add that into the jsons/parsing yourself. Im ignoring that]
+	 * Prints the guests ticket to ticket.txt
+	 * @param showName - show name on ticket
+	 * @param theaterName - theater name on ticket
+	 * @param showTime - show time registered
+	 * @param ticketAmount - amount of tickets ordered
+	 */
+	private void printGuestTicket(String showName, String theaterName, String showTime, double ticketAmount) {
+		try {
+			FileWriter writer = new FileWriter("ticket.txt", true);
+			BufferedWriter bWriter = new BufferedWriter(writer);
+			for (int i = 0; i < ticketAmount; i++) {
+				bWriter.write("********************************************************");
+				bWriter.newLine();
+				bWriter.write("************************ TICKET ************************");
+				bWriter.newLine();
+				bWriter.write("*************** Movie: " + showName + " ***************");
+				bWriter.newLine();
+				bWriter.write("*************** Show time: " + showTime + " ***************");
+				bWriter.newLine();
+				bWriter.write("*************** Theater: " + theaterName + " ***************");
+				bWriter.newLine();
+				bWriter.write("************************ THANKS FOR SHOPPING **************");
+				bWriter.newLine();
+				bWriter.write("********************************************************");
+				bWriter.newLine();
+				bWriter.newLine();
+				bWriter.newLine();
+				bWriter.newLine();
+			}
+			bWriter.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Generates seating chart and allows user to pick from any open seats
+	 * @return string based on where they are sitting ex) A3
+	 */
+	private String chooseSeating() {
+		char[] letters = {'A','B','C','D','E','F','G','H','I','J'};
+		char[][] seatingArray = new char[10][10];
+		for (int i = 0; i < seatingArray.length; i++) {
+			for (int j = 0; j < seatingArray.length; j++) {
+				seatingArray[i][j] = takingSeatsGen();
+			}
+		}
+		for (int i = 0; i < seatingArray.length; i++) {
+			System.out.print(letters[i] + ": ");
+			for (int j = 0; j < seatingArray.length; j++) {
+				System.out.print("[" + seatingArray[i][j] + "]");
+			}
+			System.out.println();
+		}
+
+		System.out.println("Where would you like to sit?\n [X = Taken] / [O = Open]");
+		System.out.println("Enter Row (A-J): ");
+		char rowSpot = scanner.next().charAt(0);
+		int rowIndex = 0;
+		for (int i = 0; i < letters.length; i++) {
+			if (letters[i] == rowSpot) {
+				rowIndex = i;
+			}
+		}
+		System.out.println("testing row index value" + rowIndex);
+		System.out.println("Enter Seat in row (0-9)");
+		int colIndex = scanner.nextInt();
+		if (seatingArray[rowIndex][colIndex] == 'O') {
+			StringBuilder seating = (new StringBuilder()).append(rowSpot).append(colIndex);
+			String seat = seating.toString();
+			System.out.println(seat);
+			return seat;
+		}
+		String notAvailable = "Seating isn't available for that spot";
+		return notAvailable;
+	}
+	/**
+	 * helper method for choosingSeats()
+	 * @return random choice of either 0 or X
+	 */
+	private char takingSeatsGen() {
+		Random rand = new Random();
+		int randomValue = rand.nextInt(2);
+		if (randomValue == 1) {
+			return 'O';
+		} else if (randomValue == 0) {
+			return 'X';
+		}
+		return 'O';
+	}
+	/**
+	 * Printing the show and checking if its valid
+	 * @param showName
+	 * @return if its a valid show = true. False if not
+	 */
+	private boolean printShow(String showName) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie(); 
+		ArrayList<Play> playList = dataLists.getPlays();
+		boolean validShow = false;
+		for (Movie movies : movieList) {
+			if (movies.getTitle().equalsIgnoreCase(showName)) {
+				System.out.println(movies.toString());
+				return validShow;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getTitle().equalsIgnoreCase(showName)) {
+				System.out.println(plays.toString());
+				return validShow;
+			}
+		}
+		if (validShow == false) {
+			System.out.println("Error finding show. Please try again!");
+			return validShow;
+		}
+		return false;
+	}
+	/**
+	 * Printing the theaters that are playing the movie and checks if theater is valid
+	 * @param showName - show name for finding out whether the movie is playing in a theater
+	 */
+	private void printPlayingIn(String showName) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie(); 
+		ArrayList<Play> playList = dataLists.getPlays();
+		for (Movie movies : movieList) {
+			if (movies.getTitle().equalsIgnoreCase(showName)) {
+				System.out.println("The movie is currently playing at these locations");
+				System.out.println(movies.getInTheaters());
+				return;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getTitle().equalsIgnoreCase(showName)) {
+				System.out.println("The play is currently playing at these locations");
+				System.out.println(plays.getInTheaters());
+				return;
+			}
+		}
+	}
+	/**
+	 * takes in theater name and checks to see what the show times are
+	 * @param theaterName
+	 * @return true if valid theater false if not
+	 */
+	private boolean printShowTimes(String theaterName) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie(); 
+		ArrayList<Play> playList = dataLists.getPlays(); 
+		for (Movie movies : movieList) {
+			if (movies.getTitle().equalsIgnoreCase(theaterName)) {
+				System.out.println("Show times for: " + theaterName);
+				System.out.println(movies.getShowTimes());
+				return true;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getTitle().equalsIgnoreCase(theaterName)) {
+				System.out.println("Show times for : " + theaterName);
+				System.out.println(plays.getShowTimes());
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Checks to see if showtime inputted is valid
+	 * @param showTime taking in showtime to see if its valid
+	 * @return true if valid/false if not
+	 */
+	private boolean isValidShowTime(String showTime) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie(); 
+		ArrayList<Play> playList = dataLists.getPlays(); 
+		for (Movie movies : movieList) {
+			if (movies.getShowTimes().contains(showTime)) {
+				return true;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getShowTimes().contains(showTime)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Command for the user to add a review 
+	 */
+	private void addReviewToMovieInput() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter the movie you'd like to review: ");
+		String showName = input.nextLine();
+		System.out.println("Reviewing: " +showName);
+		String showType = isShowValid(showName);
+		System.out.println("Enter your review");
+		String review = input.nextLine();
+		addReviewToMovie(showType, showName, review);
+	}
+	/**
+	 * 
+	 * @param showType takes in show type
+	 * @param movieName takes in movie name
+	 * @param review review the user is leaving on the page
+	 */
+	private void addReviewToMovie(String showType, String movieName, String review) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie();
+		ArrayList<Play> playList = dataLists.getPlays();
+		if (showType.equalsIgnoreCase("movie") ) {
+			for(Movie movie : movieList) {
+				if (movie.getTitle().equalsIgnoreCase(movieName)) {
+					ArrayList<String> addReview = movie.getReviews();
+					addReview.add(review);
+					movie.setReviews(addReview); 
+					DataWriter.saveMovies();
+				}
+			}
+		} else if (showType.equalsIgnoreCase("play")) {
+			for(Play plays : playList) {
+				if (plays.getTitle().equalsIgnoreCase(movieName)) {
+					ArrayList<String> addReview = plays.getReviews();
+					addReview.add(review);
+					plays.setReviews(addReview); 
+					DataWriter.savePlays();
+				}
+			}
+		}
+	}
+	/**
+	 * chekcing if a show is valid
+	 * @param showName
+	 * @return returning whether show is a movie or play
+	 */
+	private String isShowValid(String showName) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie();
+		ArrayList<Play> playList = dataLists.getPlays();
+		String movie = "movie";
+		String play = "play";
+		for (Movie movies : movieList) {
+			if (movies.getTitle().equalsIgnoreCase(showName)) {
+				return movie;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getTitle().equalsIgnoreCase(showName)) {
+				return play;
+			}
+		}
+		return "Invalid Show";
+	}
+
+	/**
+	 * allows the worker to a movie to their theater easily
+	 */
+	public void workerAddTheaterShow() {
+		System.out.println("Enter the show you would like to add to your theater");
+		String showName = scanner.nextLine();
+		String theaterName = workingAt;
+		System.out.println("Is this show a Play or a Movie?:");
+		String showType = scanner.nextLine();
+		addTheaterToShowFunction(showName, theaterName, showType);
+	}
+	/**
+	 * 
+	 * @param showName show adding to theeater
+	 * @param theaterName theater the show is being added to
+	 * @param showType play / movie
+	 */
+	private void addTheaterToShowFunction(String showName, String theaterName, String showType) {
+		DataLists dataLists = DataLists.getInstance(); 
+		ArrayList<Movie> movieList = dataLists.getMovie(); 
+		ArrayList<Play> playList = dataLists.getPlays(); 
+		ArrayList<Theaters> theaterList = dataLists.getTheaters(); 
+		boolean valid = false;
+		for(Theaters theater : theaterList) {
+			if (theater.getTitle().contentEquals(theaterName)) { 
+				System.out.println("Theater Valid!"); 
+				valid = true; 
+				break; 
+			} 
+		}
+		if (showType.equalsIgnoreCase("movie")) {
+			for(Movie movie : movieList) {
+				if (movie.getTitle().contentEquals(showName)) {
+					ArrayList<String> addTheater = movie.getInTheaters();
+					if(!addTheater.contains(theaterName)) {
+						System.out.println("Adding " +showName+ " to play at " +theaterName);
+						addTheater.add(theaterName);
+						movie.setInTheaters(addTheater);
+						DataWriter.saveMovies();
+					} else {
+						System.out.println("That theater is already playing that movie"); 
+					}
+				}
+			}
+		} else if (showType.equalsIgnoreCase("play")) {
+			for(Play plays : playList) {
+				if (plays.getTitle().contentEquals(showName)) { 
+					ArrayList<String> addTheater = plays.getInTheaters(); 
+					if(!addTheater.contains(theaterName)) { 
+						System.out.println("Adding " +showName+ " to play at " +theaterName);
+						addTheater.add(theaterName);
+						plays.setInTheaters(addTheater);
+						DataWriter.savePlays();
+					} else {
+						System.out.println("That theater is already playing that movie");
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Removes the tickets from a users owned tickets and refunds the money back
 	 */
 	public void requestRefund() {
 		DataLists dataLists = DataLists.getInstance();
@@ -288,30 +627,34 @@ public class User {
 					users.getTicketCart().remove(i); //could just display message that their card will be refunded instead of dealing with a wallet
 					total += 7.50;
 				}
+				users.getTicketCart().add("Empty Cart");
+				DataWriter.saveUsers();
 			}
 			System.out.println("Your card will be refunded $" + total + " for the refunded tickets.");
 		}
 	}
 	/**
 	 * Removes the data from the users list.
+	 * 
 	 */
-	public void deleteAccount() {
+	private void deleteAccount() {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userList = dataLists.getUsers();
 		for(User users : userList) {
 			if(users.getUsername() == currUserName) {
 				userList.remove(users);
+				DataWriter.saveUsers();
 			}
 		}
+		System.out.println("You must now logout to see changes");
 	}
 	/**
-	 * User json has a discountType value to it. Allow the user to input an id (discountType maybe based on int length or something) then update
-	 * the value in the array list to save to the json. Then later you can compare if they user has a certain discount value.
+	 * applies discount to the price
+	 * @deprecated
 	 */
 	public void useDiscount() {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userList = dataLists.getUsers();
-		Scanner scanner = new Scanner(System.in);
 		for(User users : userList) {
 			if(users.getUsername() == currUserName) {
 				System.out.println("Enter your discount id.");
@@ -322,69 +665,277 @@ public class User {
 		}
 	}
 	/**
-	 * Get the users current shopping cart and price the tickets inside. If the user is a guest then they will only be able to have the tickets printed out
-	 * instead of adding to their ticket list. If they are a member then add the shopping cart values to the ticket cart for ability to refund/print/view
+	 * Grabs the users shopping cart and removes the items from it.
+	 * Then it totals the price and adds the tickets to your owned ticket list ticketCart
 	 */
 	public void checkout() {
 		DataLists dataLists = DataLists.getInstance();
 		ArrayList<User> userList = dataLists.getUsers();
-		Scanner scanner = new Scanner(System.in);
 		double price = 0.0;
 		for(User users : userList) {
-			if(users.getUsername() == currUserName) {
+			if(users.getUsername() == currUserName)  {
+				price = users.getShoppingCart().size()*7.50;
+				ArrayList<String> removeTickets = users.getShoppingCart(); 
+				ArrayList<String> addTickets = users.getTicketCart();
+				if (users.getTicketCart().contains("Empty Cart")) { 
+					users.getTicketCart().remove(0); 
+				}
 				for(int i = 0; i < users.getShoppingCart().size(); i++) {
-					price += 7.50;
+					addTickets.add(removeTickets.get(i));
 				}
+				System.out.println(addTickets);
+				users.setTicketCart(addTickets); 
+				removeTickets.clear(); 
+				removeTickets.add("Empty Cart"); 
+				users.setShoppingCart(removeTickets);
+				DataWriter.saveUsers(); 
 				System.out.println("The total price of the tickets in your cart is $" + price);
-				if(users.getUserType() == 0) {
-					System.out.println("Would you like to have a printable copy of your tickets? (y/n)");
-					String response = scanner.nextLine();
-					if(response.equalsIgnoreCase("y"))
-						users.printTicket();
+				System.out.println("Use Show Tickets to show your currently owned tickets");
+			}
+		}
+	}
+	/**
+	 * shows currently owned tickets
+	 */
+	public void showTickets() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				System.out.println(users.getTicketCart());
+			}
+		}
+	}
+	/**
+	 * sim command meant for running scenerio 2
+	 */
+	public void watchMovie() {
+		System.out.println("Watching the movie!!!!!!!");
+		System.out.println("The movie has finished!!!!!");
+		addReviewToMovieInput();
+		System.out.println("Rate the movie!!!!!!");
+		rateMovie();
+		removeTicketCart();
+		System.out.println("Thanks for using our app!\nHere is 100 points for reviewing!!!!!!!");
+		addPoints(100);
+	}
+	/**
+	 * adds points to the current user whenever called
+	 */
+	private void addPoints(int points) {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				users.setPoints(users.getPoints()+points);
+				updatePoints(users.getPoints());
+				DataWriter.saveUsers();
+				return;
+			}
+		}
+	}
+	/**
+	 * command for rating a movie [1-5]
+	 */
+	private void rateMovie() {
+		System.out.println("Enter the name of the show you want to rate");
+		String showName = scanner.nextLine();
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Movie> movieList = dataLists.getMovie();
+		ArrayList<Play> playList = dataLists.getPlays();
+		System.out.println("Enter the rating of the movie! [1-5]");
+		int rating = scanner.nextInt();
+
+		for (Movie movies : movieList) {
+			if (movies.getTitle().equalsIgnoreCase(showName)) {
+				movies.setRating(rating);
+				DataWriter.savePlays();
+				return;
+			}
+		}
+		for (Play plays : playList) {
+			if (plays.getTitle().equalsIgnoreCase(showName)) {
+				plays.setRating(rating);
+				DataWriter.savePlays();
+			}
+		}
+	}
+	/**
+	 * removes the tickets from your ticketCart after watching a movie
+	 */
+	private void removeTicketCart() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				for (int i = 0; i < users.getTicketCart().size();i++) {
+					users.getTicketCart().remove(i);
 				}
-				else if(users.getUserType() == 1 || users.getUserType() == 2) {
-					System.out.println("Options");
-					System.out.println("- Press 1 to apply for a refund on your tickets.");
-					System.out.println("- Press 2 to have a printable copy of your tickets.");
-					System.out.println("- Press 3 to view your tickets.");
-					int userResponse = scanner.nextInt();
-					
-					if(userResponse == 1) {
-						users.requestRefund();
-					}
-					else if(userResponse == 2) {
-						users.printTicket();
-					}
-					else if(userResponse == 3) {
-						users.getShoppingCart();
+				users.getTicketCart().add("Empty Cart");
+				DataWriter.saveUsers();
+			}
+		}
+	}
+
+	public void printShoppingCart() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				System.out.println(users.getShoppingCart());
+				return;
+			}
+		}
+	}
+	/**
+	 * Takes in the ticket stored in ticketCart and prints it to memberticket.txt
+	 */
+	public void printUserTicketInfo() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<User> userList = dataLists.getUsers();
+		if (checkTicketCartEmpty() == true) {
+			System.out.println("Printing Your Owned Ticket");
+			for (User users : userList) {
+				if (users.getUsername() == currUserName) {
+					for (int i = 0; i < users.getTicketCart().size(); i++) {
+						String ticket = users.getTicketCart().get(i);
+						String[] ticketInfo = ticket.split(",");
+						String showName = ticketInfo[0];
+						String theaterName = ticketInfo[1];
+						String showTime = ticketInfo[2];
+						String seating = ticketInfo[3];
+						printUserTicket(showName, theaterName, showTime, seating);
 					}
 				}
 			}
 		}
 	}
 	/**
-	 * Print out the ticket info to a fancy txt file. Include Movie Name/Theater Name/Show Times/Seat Location if reservered
+	 * checking if ticket cart is empty
+	 * @return true if not | false if it is
 	 */
-	public void printTicket() {
+	private boolean checkTicketCartEmpty() {
 		DataLists dataLists = DataLists.getInstance();
-		ArrayList<Movie> movieList = dataLists.getMovie();
-		try {
-			FileWriter writer = new FileWriter("Print.txt", true);
-			BufferedWriter bWriter = new BufferedWriter(writer);
-			
-			for(Movie movie : movieList) {
-				bWriter.write("Movie: " + movie.getTitle());
-				bWriter.newLine();
-				bWriter.write("Show time: " + movie.getShowTimes());
-				bWriter.newLine();
-				bWriter.write("Theater: " + movie.getInTheaters());
+		ArrayList<User> userList = dataLists.getUsers();
+		for (User users : userList) {
+			if (users.getUsername() == currUserName) {
+				if (!users.getTicketCart().contains("Empty Cart")) {
+					return true;
+				}
 			}
+		}
+		System.out.println("No tickets in your list");
+		return false;
+	}
+	/**
+	 * Prints the members ticket to a file
+	 * @param showName - 
+	 * @param theaterName
+	 * @param showTime
+	 * @param seating
+	 */
+	private void printUserTicket(String showName, String theaterName, String showTime, String seating) {
+		try {
+			FileWriter writer = new FileWriter("memberticket.txt", true);
+			BufferedWriter bWriter = new BufferedWriter(writer);
+			bWriter.write("********************************************************");
+			bWriter.newLine();
+			bWriter.write("************************ TICKET ************************");
+			bWriter.newLine();
+			bWriter.write("*************** Movie: " + showName + " ********************");
+			bWriter.newLine();
+			bWriter.write("*************** Show time: " + showTime + " ******************");
+			bWriter.newLine();
+			bWriter.write("*************** Theater: " + theaterName + " ********************");
+			bWriter.newLine();
+			bWriter.write("*************** Theater Seating: " + seating + " ********************");
+			bWriter.newLine();
+			bWriter.write("************************ THANKS FOR SHOPPING **************");
+			bWriter.newLine();
+			bWriter.write("********************************************************");
+			bWriter.newLine();
+			bWriter.newLine();
+			bWriter.newLine();
+			bWriter.newLine();
+			bWriter.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+	/**
+	 * Allows the user to search shows based off of provided values
+	 */
+	public void searchShows() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<Theaters> theatersList = dataLists.getTheaters();
+		ShowSearch search = new ShowSearch();
+		String[] searchList = {"Search By Genre", "Search by Age Rating", "Search By Theaters"};
+		for (int i = 0; i < searchList.length; i++) {
+			System.out.println(i+1 + " " + searchList[i]);
+		}
+		System.out.println("Enter value: ");
+		int input = scanner.nextInt();
+		System.out.println();
+		scanner.nextLine();
+		boolean isAdult = isAdult();
+		if (input == 1) {
+			System.out.print("\nEnter either 'movie' or 'play': " );
+			String showType = scanner.nextLine();
+			getGenresList();
+			System.out.println("Enter genre from the list");
+			String genreSearch = scanner.nextLine();
+			search.searchByGenre(isAdult, showType, genreSearch);
+		} else if (input == 2) {
+			System.out.println("Enter the age rating you'd like to search");
+			System.out.println("[G, PG, PG-13, R]");
+			String ageRatingSearch = scanner.nextLine();
+			search.searchByAgeRating(isAdult, "movie", ageRatingSearch);
+		} else if (input == 3) {
+			System.out.println("Enter the theater name you want to search for movies: ");
+			for (Theaters theaters : theatersList) {
+				System.out.println(theaters.getTitle());
+			}
+			String theaterInput = scanner.nextLine();
+			search.searchByTheater(theaterInput);
+		} else {
+			System.out.println("Invalid Input");
+		}
+	}
+	/**
+	 * checking if current user is an adult
+	 * @return
+	 */
+	private boolean isAdult() {
+		if (currAge == 0) {
+			return false;
+		} else if (currAge >= 17){
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Command to print out the lits of genres in our movies/plays.json. Avoiding hardcoding
+	 */
+	private void getGenresList() {
+		DataLists dataLists = DataLists.getInstance();
+		ArrayList<String> genreList= new ArrayList<String>();
+		ArrayList<Movie> movieList = dataLists.getMovie();
+		ArrayList<Play> playList = dataLists.getPlays();
+		for (Movie movies : movieList) {
+			if (!genreList.contains(movies.getGenre())) {
+				genreList.add(movies.getGenre());
+			}
+		}
+		for (Play plays : playList) {
+			if (!genreList.contains(plays.getGenre())) {
+				genreList.add(plays.getGenre());
+			}
+		}
+		System.out.println(genreList);
+	}
+
+
 	/*
 	 * Getters and Setters for our User object
 	 */
@@ -463,5 +1014,5 @@ public class User {
 	public void setDiscountType(int discountType) {
 		this.discountType = discountType;
 	}
-	
+
 }

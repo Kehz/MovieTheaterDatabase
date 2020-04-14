@@ -3,8 +3,8 @@ package main;
 import java.util.ArrayList;
 
 public class Play extends Show {
-	private int amountActors;
-	private int timesPerformed;
+	protected int amountActors;
+	protected int timesPerformed;
 	public Play(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters, int amountActors, int timesPerformed) {
 		super(id,title, length, genre, director, rating, reviews, showTimes, inTheaters);
 		this.amountActors = amountActors;
