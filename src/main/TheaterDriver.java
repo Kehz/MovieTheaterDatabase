@@ -91,6 +91,28 @@ public class TheaterDriver {
 		System.out.println("\n");
 
 	}
+	
+	
+	//for testing
+	public int testUserCommand(int numCommands, int input) {
+
+
+		int command = input - 1;
+
+		if(command >= 0 && command <= numCommands -1) return command; 
+
+		return -1;
+	}
+	//for testing
+	public void loginMenu() {
+		System.out.println("\n******************* Login Menu *******************");
+
+		for (int i = 0; i < mainLoginMenu.length; i++) {
+			System.out.println((i+1) + ". " + mainLoginMenu[i]);
+		}
+		System.out.println("\n");
+
+	}
 	/**
 	 * Executing the runLogin command so we can begin the app
 	 */
