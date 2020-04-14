@@ -28,10 +28,6 @@ class PlayTest {
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	void test() {
-		fail("Not yet implemented"); // TODO
-	}
 	
 	@Test
 	public void testGetAmountActors() {
@@ -91,6 +87,7 @@ class PlayTest {
 		assertEquals(2,fact);
 	}
 	
+	@Test
 	public void testSetTimesPerformed() {
 		int id = 2;
 		String title = "Movie Title";
@@ -105,9 +102,15 @@ class PlayTest {
 		int timesPerformed = 2;
 		
 		Play play = new Play(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, amountActors, timesPerformed);
-		play.setTimesPerformed(3);
+		play.setTimesPerformed(2);
 		int fact = play.getTimesPerformed();
-		assertEquals(3,fact);
+		assertEquals(2,fact);
+	}
+	
+	@Test
+	public void testToString() {
+		Play play = new Play(0, null, 0, null, null, 0, null, null, null, 0, 0);
+		play.toString();
 	}
 
 }

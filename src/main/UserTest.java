@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+// I have no idea whats even going on any more
 class UserTest {
 	User users = new User(null, null, null, 0, 0, 0, 0, null, null);
 	private final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -24,6 +25,17 @@ class UserTest {
 	public void cleanUpStreams() {
 		System.setOut(null);
 	}
+	
+	@Test
+	void testDisplayMenu() {
+		users.userMainMenu();
+	}
+	
+	@Test
+	void testUpdateCurrentUser() {
+		users.updateCurrentUser("test", "test", "test", 3, 3);
+	}
+	
 
 	@Test
 	void testGetUserName() {
@@ -93,8 +105,4 @@ class UserTest {
 		int get = users.getDiscountType();
 		assertEquals(1,get);
 	}
-	
-	
-	
-
 }

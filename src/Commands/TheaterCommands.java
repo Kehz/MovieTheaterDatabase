@@ -46,36 +46,6 @@ public class TheaterCommands {
 	
 	public void runSim() {
 		us.watchMovie();
-<<<<<<< HEAD
-=======
-	}
-	
-	public void search() {
-		us.searchShows();
-	}
-	
-	public void printTickets() {
-		us.printUserTicketInfo();
-	}
-	public void refund() {
-		us.requestRefund();
-	}
-	
-	public void printShoppingCart() {
-		us.printShoppingCart();
-	}
-	
-	public void printTicketCart() {
-		us.showTickets();
-	}
-	
-	public void changeAccountDetails() {
-		us.changeAccountDetails();
-	}
-	
-	public void workerAddTheaterShow() {
-		us.workerAddTheaterShow();
->>>>>>> eeba13c2651a20c185979b0e67a1950ae3ac5f69
 	}
 	
 	public void search() {
@@ -105,3 +75,4 @@ public class TheaterCommands {
 		us.workerAddTheaterShow();
 	}
 }
+	

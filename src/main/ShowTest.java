@@ -28,10 +28,6 @@ class ShowTest {
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	void test() {
-		fail("Not yet implemented"); // TODO
-	}
 	
 	@Test
 	public void testGetTitle() {
@@ -255,7 +251,7 @@ class ShowTest {
 		
 		Show show = new Show(id, title, length, genre, director, rating, reviews, showTimes, inTheaters);
 		ArrayList<String> fact = show.getReviews();
-		assertEquals("Review",fact);
+		assertEquals(reviews,fact);
 	}
 	
 	@Test
@@ -278,7 +274,7 @@ class ShowTest {
 		reviews2.add("New Review");
 		show.setReviews(reviews2);
 		ArrayList<String> fact = show.getReviews();
-		assertEquals("New Review", fact);
+		assertEquals(reviews2, fact);
 	}
 	
 	@Test
@@ -298,7 +294,7 @@ class ShowTest {
 		
 		Show show = new Show(id, title, length, genre, director, rating, reviews, showTimes, inTheaters);
 		ArrayList<String> fact = show.getShowTimes();
-		assertEquals("Show time",fact);
+		assertEquals(showTimes,fact);
 	}
 	
 	@Test
@@ -321,7 +317,7 @@ class ShowTest {
 		showTimes2.add("New Time");
 		show.setShowTimes(showTimes2);
 		ArrayList<String> fact = show.getShowTimes();
-		assertEquals("New Time", fact);
+		assertEquals(showTimes2, fact);
 	}
 	
 	@Test
@@ -383,7 +379,7 @@ class ShowTest {
 		Show show = new Show(id, title, length, genre, director, rating, reviews, showTimes, inTheaters);
 
 		ArrayList<String> fact = show.getInTheaters();
-		assertEquals("In theater", fact);
+		assertEquals(inTheaters, fact);
 	}
 	
 	@Test
@@ -406,7 +402,7 @@ class ShowTest {
 		inTheaters2.add("Now in theater");
 		show.setInTheaters(inTheaters2);
 		ArrayList<String> fact = show.getInTheaters();
-		assertEquals("Now in theater", fact);
+		assertEquals(inTheaters2, fact);
 	}
 	
 }

@@ -1014,9 +1014,4 @@ public class User {
 	public void setDiscountType(int discountType) {
 		this.discountType = discountType;
 	}
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> eeba13c2651a20c185979b0e67a1950ae3ac5f69

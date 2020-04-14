@@ -28,10 +28,6 @@ class MovieTest {
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	void test() {
-		fail("Not yet implemented"); // TODO
-	}
 	
 	@Test
 	public void testGetReleaseYear() {
