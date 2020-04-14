@@ -52,5 +52,45 @@ class DataListsTest {
 		DataLists dataLists = DataLists.getInstance();
 		dataLists.getTheaters();
 	}
+	
+	@Test
+	void testAddPlay() {
+		ArrayList<String> reviews = new ArrayList<String>();
+		ArrayList<String> showTimes = new ArrayList<String>();
+		ArrayList<String> inTheaters = new ArrayList<String>();
+		reviews.add("Nice");
+		showTimes.add("8pm-3am");
+		inTheaters.add("Spark Theater");
+		DataLists dataLists = DataLists.getInstance();
+		dataLists.addPlay(1, "Frozen 2", 120, "Comedy", "John", 3, reviews, showTimes, inTheaters, 12, 12);
+	}
+	
+	@Test
+	void testAddMovie() {
+		ArrayList<String> reviews = new ArrayList<String>();
+		ArrayList<String> showTimes = new ArrayList<String>();
+		ArrayList<String> inTheaters = new ArrayList<String>();
+		reviews.add("Nice");
+		showTimes.add("8pm-3am");
+		inTheaters.add("Spark Theater");
+		DataLists dataLists = DataLists.getInstance();
+		dataLists.addMovie(1, "test", 24, "Comedy", "mark", 3, reviews, showTimes, inTheaters, "pg-13", 2020);
+	}
+	
+	@Test
+	void testAddTheater() {
+		ArrayList<String> reviews = new ArrayList<String>();
+		reviews.add("Alright");
+		DataLists dataLists = DataLists.getInstance();
+		dataLists.addTheater(1, "Lame", 2, reviews, 123123);
+	}
+	
+	@Test
+	void testAddUser() {
+		ArrayList<String> shoppingCart = new ArrayList<String>();
+		ArrayList<String> ticketCart = new ArrayList<String>();
+		DataLists dataLists = DataLists.getInstance();
+		dataLists.addUser("Tester", "password", "email@email.com", 12, 1222, 032, 0, shoppingCart, ticketCart);
+	}
 
 }
