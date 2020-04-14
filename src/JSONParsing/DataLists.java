@@ -30,14 +30,16 @@ public class DataLists {
 		users = DataLoader.loadUsers();
 	}
 	
-	
+	/**
+	 * 
+	 * @return DataList instance
+	 */
 	public static DataLists getInstance() {
 		if(dataLists == null) {
 			dataLists = new DataLists();
 		}
 		return dataLists;
 	}
-	
 	public ArrayList<Play> getPlays() {
 		return plays;
 	}
@@ -54,24 +56,69 @@ public class DataLists {
 		return users;
 	}
 	
-	public void addMovie(int id, String title, int length, String genre, String director, int rating, String reviews,String showTimes, String ageRating, int releaseYear) {
-		movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, ageRating, releaseYear));
+	/**
+	 * Adds movie too the datawriter to save to json
+	 * @param id
+	 * @param title
+	 * @param length
+	 * @param genre
+	 * @param director
+	 * @param rating
+	 * @param reviews
+	 * @param showTimes
+	 * @param inTheaters
+	 * @param ageRating
+	 * @param releaseYear
+	 */
+	public void addMovie(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews,ArrayList<String> showTimes, ArrayList<String> inTheaters, String ageRating, int releaseYear) {
+		movies.add(new Movie(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, ageRating, releaseYear));
 		DataWriter.saveMovies();
 	}
-	
-	public void addPlay(int id, String title, int length, String genre, String director, int rating, String reviews, String showTimes, int amountActors, int timesPerformed) {
-		plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, amountActors, timesPerformed));
+	/**
+	 * Adds play to the datawriter to save to json
+	 * @param id
+	 * @param title
+	 * @param length
+	 * @param genre
+	 * @param director
+	 * @param rating
+	 * @param reviews
+	 * @param showTimes
+	 * @param inTheaters
+	 * @param amountActors
+	 * @param timesPerformed
+	 */
+	public void addPlay(int id, String title, int length, String genre, String director, int rating, ArrayList<String> reviews, ArrayList<String> showTimes, ArrayList<String> inTheaters, int amountActors, int timesPerformed) {
+		plays.add(new Play(id, title, length, genre, director, rating, reviews, showTimes, inTheaters, amountActors, timesPerformed));
 		DataWriter.savePlays();
 	}
 	
-	
-	public void addTheater(String name, int ratings, String reviews) {
-		theaters.add(new Theaters(name, ratings, reviews));
+	/**
+	 * adds theater to the datawriter to save json
+	 * @param id
+	 * @param name
+	 * @param ratings
+	 * @param reviews
+	 * @param employeeID
+	 */
+	public void addTheater(int id, String name, int ratings, ArrayList<String >reviews, int employeeID) {
+		theaters.add(new Theaters(id, name, ratings, reviews, employeeID));
 		DataWriter.saveTheaters();
 	}
-	
-	public void addUser(String username, String password, String email, int age, int points) {
-		users.add(new User(username, password, email, age, points));
+	/**
+	 * adds user to the datawriter to save json
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @param age
+	 * @param points
+	 * @param employeeID
+	 * @param discountType
+	 * @param shoppingCart
+	 * @param ticketCount
+	 */
+	public void addUser(String username, String password, String email, int age, int points, int employeeID, int discountType, ArrayList<String> shoppingCart, ArrayList<String> ticketCount) {
+		users.add(new User(username, password, email, age, points, employeeID, discountType, shoppingCart, ticketCount));
 		DataWriter.saveUsers();
 	}
 }
